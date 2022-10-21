@@ -1,8 +1,11 @@
 const { Router } = require('express');
-const { User } = require('../controllers/user');
+const { User } = require('./user.controller');
 
 
 const router = Router();
+
+
+
 
 
 router.post('/user', (req, res, next) => {

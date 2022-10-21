@@ -1,16 +1,16 @@
 const jwt = require('jsonwebtoken');
-const { env } = require('../config.env');
+const { port } = require('../config.env');
 
 
 class Jwt {
     sign = function(payload) {
-        return jwt.sign(payload, env.JWT_KEY, {
+        return jwt.sign(payload, port.JWT_KEY, {
             algorithm: 'HS256',
             expiresIn: 60*10
         });
     }
     verify = function(token) {
-        const result = jwt.verify(token, env.JWT_KEY);
+        const result = jwt.verify(token, port.JWT_KEY);
         
         if (result instanceof Error) {
             throw result;
@@ -18,7 +18,7 @@ class Jwt {
         return result;
     }
     refresh = function() {
-        return jwt.sign({}, env.JWT_KEY, {
+        return jwt.sign({}, port.JWT_KEY, {
             algorithm: 'HS256',
             expiresIn: 60*60*24
         });

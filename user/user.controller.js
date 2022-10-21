@@ -1,4 +1,4 @@
-const { User } = require('../services/user');
+const { User } = require('./user.service');
 const { jwt } = require('../util/jwt');
 const { InvalidParamsError } = require('../util/exception');
 const { env } = require('../config.env');

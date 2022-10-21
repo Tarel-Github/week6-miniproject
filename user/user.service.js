@@ -1,4 +1,4 @@
-const { User } = require('../repositories/user');
+const { User } = require('./user.repository');
 const bcrypt = require('bcrypt');
 const { env } = require('../config.env');
 const { InvalidParamsError } = require('../util/exception');

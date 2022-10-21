@@ -3,19 +3,16 @@ const cookieParser = require('cookie-parser');
 const fileupload = require('express-fileupload');
 const path = require('path');
 const { env } = require('./config.env');
-const jwt = require("jsonwebtoken")
 
-const userRouter = require('./routes/user');
-const router = express.Router();
+const indexRouter = require('./index');
 
-const SECRET_KEY = `customized-secret-key`;
+const port = env.PORT || 3000;
 
-const port = 3000
+
 const app = express();
 
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({extended:false}));
 
 app.use(express.json());
 app.use(cookieParser());
@@ -26,9 +23,10 @@ app.use(fileupload({
     abortOnLimit: true,
 }));
 
-app.use('/', userRouter);
+
+app.use('/', indexRouter);
 
 
-app.listen(env.PORT, () => {
-    console.log(`SERVER RUNNING ON PORT: ${env.PORT}`);
+app.listen(port, () => {
+    console.log(`SERVER RUNNING ON PORT: ${port}`);
 });
