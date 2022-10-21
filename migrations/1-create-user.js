@@ -1,7 +1,7 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 
-const { env } = require('../config.env');
+const env = require('../config.env');
 
 module.exports = {
   async up(queryInterface, Sequelize) {

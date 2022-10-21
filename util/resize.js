@@ -1,5 +1,5 @@
 const sharp = require('sharp');
-const { env } = require('../config.env.js');
+const env = require('../config.env.js');
 
 async function saveProfImg(userId, profImg) {
     const dirPath = env.ROOT + env.PROF_DIR;

@@ -4,8 +4,19 @@ const path = require('path');
 dotenv.config();
 
 
-class Env {
+class DbConnection {
     constructor() {
+        this.MODE = process.env.NODE_ENV || 'development';
+        this.DB_HOST = process.env.DB_HOST;
+        this.DB_NAME = process.env.DB_NAME;
+        this.DB_USER = process.env.DB_USER;
+        this.DB_PASSWORD = process.env.DB_PASSWORD;
+    }
+}
+
+class Env extends DbConnection {
+    constructor() {
+        super();
         this.PORT = Number(process.env.PORT);
         this.SALT_ROUND = Number(process.env.SALT_ROUND);
         this.JWT_KEY = process.env.JWT_KEY;
@@ -15,4 +26,4 @@ class Env {
 }
 
 
-exports.env = new Env();
+module.exports = new Env();

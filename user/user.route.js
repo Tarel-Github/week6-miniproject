@@ -10,7 +10,7 @@ router.post('/user', async(req, res, next) => {
     const { profImg } = req.files;
     console.log(profImg);
 
-    const { env } = require('../config.env');
+    const env = require('../config.env');
 
     const dirPath = env.ROOT + env.PROF_DIR;
 
