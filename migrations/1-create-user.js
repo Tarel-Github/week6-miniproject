@@ -7,7 +7,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {
       userId: {
-        type: Sequelize.SMALLINT.UNSIGNED,
+        type: Sequelize.SMALLINT,
         autoIncrement: true,
         primaryKey: true
       },
@@ -25,9 +25,13 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      profImg: {
+      profComment: {
         type: Sequelize.STRING,
-        defaultValue: env.ROOT + env.PROF_DIR + 'default.png'
+        defaultValue: env.ROOT + env.PROF_DIR + 'default_comment.png'
+      },
+      profMypage: {
+        type: Sequelize.STRING,
+        defaultValue: env.ROOT + env.PROF_DIR + 'default_mypage.png'
       },
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE

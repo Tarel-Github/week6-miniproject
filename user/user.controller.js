@@ -1,7 +1,7 @@
 const { User } = require('./user.service');
 const { jwt } = require('../util/jwt');
 const { InvalidParamsError } = require('../util/exception');
-const { env } = require('../config.env');
+const { saveProfImg } = require('../util/resize');
 
 
 class UserController {
@@ -63,13 +63,13 @@ class UserController {
         const { profImg } = req.files;
         // const { userId } = req.app.locals.user;
         const userId = 1;
-        console.log(profImg);
 
         if (profImg.mimetype.split('/')[0] !== 'image') throw new InvalidParamsError('이미지를 업로드해 주세요.');
 
-        const profImgPath = await User.profileUpdate({ name: profImg.name, userId });        
-        profImg.mv(profImgPath);
-        console.log(profImgPath);
+        const imgPath = await saveProfImg(userId, profImg);
+        const profImgPath = await User.profileUpdate(userId, imgPath);
+        console.log(imgPath);
+
         res.status(200).json({
             message: 'SUCCESS',
         });

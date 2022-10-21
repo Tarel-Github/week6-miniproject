@@ -1,23 +1,34 @@
 const { Router } = require('express');
 const { User } = require('./user.controller');
+const sharp = require('sharp');
 
 
 const router = Router();
 
 
-
-
-
-router.post('/user', (req, res, next) => {
+router.post('/user', async(req, res, next) => {
     const { profImg } = req.files;
-    console.log(profImg.name);
-    console.log(profImg.mimetype);
+    console.log(profImg);
 
-    const splitName = profImg.name.split('.');
-    const extension = splitName[splitName.length-1]
-    console.log(extension);
+    const { env } = require('../config.env');
 
-    res.send(req.files)
+    const dirPath = env.ROOT + env.PROF_DIR;
+
+    const buffer = profImg.data;
+    const output = await sharp(buffer)
+        .toFormat('webp')
+        .resize({
+            width: 200,
+            height: 200,
+            fit: 'cover'
+        })
+        .toFile(`${dirPath}cover.webp`);
+    console.log(output);
+    // const splitName = profImg.name.split('.');
+    // const extension = splitName[splitName.length-1]
+    // console.log(extension);
+
+    res.send(output)
 });
 
 router.get('/user', User.findAll);

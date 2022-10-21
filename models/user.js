@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.init({
     userId: {
-      type: DataTypes.SMALLINT.UNSIGNED,
+      type: DataTypes.SMALLINT,
       autoIncrement: true,
       primaryKey: true
     },
@@ -42,9 +42,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
-    profImg: {
+    profComment: {
       type: DataTypes.STRING,
-      defaultValue: env.ROOT + env.PROF_DIR + 'default.png'
+      defaultValue: env.ROOT + env.PROF_DIR + 'default_comment.png'
+    },
+    profMypage: {
+      type: DataTypes.STRING,
+      defaultValue: env.ROOT + env.PROF_DIR + 'default_mypage.png'
     },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE

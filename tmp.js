@@ -13,3 +13,13 @@ const path = require('path');
 // console.log(__dirname);
 
 console.log(path.join(__dirname, 'public'));
+
+'dotenv'
+
+process.env
+
+const joi = require('./util/validation')
+
+joi.commentSchema()
+joi.postSchema()
+joi.signinSchema()

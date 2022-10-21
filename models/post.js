@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Post.init({
-    postId: {type: DataTypes.SMALLINT,
+    postId: {type: DataTypes.SMALLINT.UNSIGNED,
           primaryKey:true},
-    userId: DataTypes.SMALLINT,
+    userId: DataTypes.SMALLINT.UNSIGNED,
     nickname:DataTypes.STRING(40), 
     title:DataTypes.STRING(40), 
     contents:DataTypes.TEXT('tiny'),
