@@ -1,7 +1,7 @@
-import Joi from "joi";
+const Joi = require('joi');
 
 
-export default {
+module.exports = {
     signupSchema: Joi.object({
         nickname: Joi.string().min(3).alphanum().required()
             .error(new Error("닉네임은 최소 3자 이상, 알파벡 대소문자(a~z, A~Z), 숫자(0~9)로 구성되어야 합니다.")),

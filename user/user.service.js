@@ -1,6 +1,6 @@
 const { User } = require('./user.repository');
 const bcrypt = require('bcrypt');
-const { env } = require('../config.env');
+const env = require('../config.env');
 const { InvalidParamsError } = require('../util/exception');
 
 
@@ -37,15 +37,16 @@ class UserService {
         return await User.updateNickname({ userId, nickname });
     }
 
-    profileUpdate = async function({ name, userId }) {
-        const splitName = name.split('.');
-        const extension = splitName[splitName.length-1];
-        const filename = `${userId}.${extension}`;
-        const profImgPath = env.ROOT + env.PROF_DIR + filename;
+    profileUpdate = async function(userId, imgPath) {
+        // const splitName = name.split('.');
+        // const extension = splitName[splitName.length-1];
+        // const filename = `${userId}.${extension}`;
+        // const profImgPath = env.ROOT + env.PROF_DIR + filename;
 
-        await User.updateProfImg({ userId, profImgPath });
+        const result = await User.updateProfImg(userId, imgPath);
+        console.log('service result: ', result);
 
-        return profImgPath;
+        return result;
     }
 
     deleteUser = async function() {};

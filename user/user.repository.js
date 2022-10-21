@@ -41,8 +41,8 @@ class UserRepository extends User {
         });
     }    
 
-    updateProfImg = async function({ userId, profImg }) {
-        return await User.update({ profImg }, {
+    updateProfImg = async function(userId, [profComment, profMypage]) {
+        return await User.update({ profComment, profMypage }, {
             where: { userId }
         });
     }
