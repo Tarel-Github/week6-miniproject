@@ -1,22 +1,34 @@
-
-const cookieParser = require("cookie-parser");
-const express = require("express");
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const fileupload = require('express-fileupload');
+const path = require('path');
+const { env } = require('./config.env');
 const jwt = require("jsonwebtoken")
 
-const app = express();
+const userRouter = require('./routes/user');
 const router = express.Router();
+
 const SECRET_KEY = `customized-secret-key`;
-const routes = require('./routes');
+
 const port = 3000
+const app = express();
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({extended:false}));
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.urlencoded({extended:false}));
+app.use(fileupload({
+    limits: {
+        fileSize: 10000000, // 10Mb
+    },
+    abortOnLimit: true,
+}));
 
-app.use('/api', routes);
-
-app.listen(port, ()=>{
-    console.log(port, '포트로 서버가 열렸습니다')
-})
+app.use('/', userRouter);
 
 
+app.listen(env.PORT, () => {
+    console.log(`SERVER RUNNING ON PORT: ${env.PORT}`);
+});
