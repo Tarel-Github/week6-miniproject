@@ -18,22 +18,22 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.SMALLINT
+      type: DataTypes.SMALLINT.UNSIGNED
     },
     postId: {
       allowNull: false,
-      type: DataTypes.SMALLINT,
+      type: DataTypes.SMALLINT.UNSIGNED,
       references: {
-        model: "Posts",
+        model: "Post",
         key: "postId",
       },
       onDelete: "cascade",
     },
     userId: {
       allowNull: false,
-      type: DataTypes.SMALLINT,
+      type: DataTypes.SMALLINT.UNSIGNED,
       references: {
-        model: "Users",
+        model: "User",
         key: "userId",
       },
       onDelete: "cascade",

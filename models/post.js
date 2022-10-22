@@ -10,21 +10,56 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      // this.belongsTo(models.User,{
+      //   as: 'User',
+      //   foreignKey: 'userId'
+      // });
+      // this.belongsTo(models.Category,{
+      //   as: 'Category',
+      //   foreignKey: 'categoryId'
+      // });
     }
   }
   Post.init({
-    postId: {type: DataTypes.SMALLINT.UNSIGNED,
-          primaryKey:true},
-    userId: DataTypes.SMALLINT.UNSIGNED,
-    nickname:DataTypes.STRING(40), 
-    title:DataTypes.STRING(40), 
-    contents:DataTypes.TEXT('tiny'),
-    category:DataTypes.STRING(40),
-    likes:{type: DataTypes.BOOLEAN,
-      defaultValue: false},
-    createdAt:DataTypes.DATE, 
-    updatedAt:DataTypes.DATE
+    postId: {
+      type: DataTypes.SMALLINT.UNSIGNED,
+      primaryKey:true,
+      allowNull: false,
+      autoIncrement: true
+    },
+    userId: {
+      type: DataTypes.SMALLINT.UNSIGNED,
+      references: {
+        model: "User",
+        key: "userId",
+      },
+      allowNull: false,
+    },
+    categoryId : {
+      type:  DataTypes.SMALLINT.UNSIGNED,
+      // references: {
+      //   model: "Category",
+      //   key: "categoryId",
+      // },
+      allowNull: false,
+    },
+    title: {
+      type: DataTypes.STRING(40),
+      allowNull: false, 
+    },
+    contents: {
+      type: DataTypes.TEXT('tiny')
+    },
+    likes:{
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    createdAt: {
+      type: DataTypes.DATE
+    }, 
+    updatedAt: {
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'Post',

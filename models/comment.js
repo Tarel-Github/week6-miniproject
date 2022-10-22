@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.SMALLINT,
       references: {
-        model: "Posts",
+        model: "Post",
         key: "postId",
       },
       onDelete: "cascade",
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.SMALLINT,
       references: {
-        model: "Users",
+        model: "User",
         key: "userId",
       },
       onDelete: "cascade",

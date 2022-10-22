@@ -16,19 +16,11 @@ module.exports = {
       postId: {
         type: Sequelize.DataTypes.SMALLINT,
         allowNull: false,
-        references: {
-          model:"Posts",
-          key:"postId",
-        },
         onDelete: "cascade",
       },
       userId: {
         type: Sequelize.DataTypes.SMALLINT,
         allowNull: false,
-        references: {
-          model:"Users",
-          key:"userId",
-        },
         onDelete: "cascade",
       },
       like: {
