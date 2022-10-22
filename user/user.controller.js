@@ -1,16 +1,17 @@
-const { User } = require('./user.service');
-const { jwt } = require('../util/jwt');
+const User = require('./user.service');
+const jwt = require('../util/jwt');
 const { InvalidParamsError } = require('../util/exception');
 const { saveProfImg } = require('../util/resize');
+const { refreshTokenToMemory } = require('../db/refresh');
 
 
 class UserController {
     signup = async function(req, res, next) {
-        const { email, password, confirm, nickname } = req.body;
+        const { username, password, confirm, nickname } = req.body;
         if (password !== confirm) 
             throw new InvalidParamsError('비밀번호가 일치하지 않습니다.');
 
-        await User.signup({ email, password, nickname });
+        await User.signup({ username, password, nickname });
 
         res.status(200).json({
             message: "SUCCESS"
@@ -18,12 +19,12 @@ class UserController {
     }
 
     signin = async function(req, res, next) {
-        const { email, password } = req.body;        
+        const { username, password } = req.body;        
 
-        const payload = await User.signin({ email, password });
+        const payload = await User.signin({ username, password });
         const accessToken = jwt.sign(payload);
         const refreshToken = jwt.refresh();
-        // cache refreshToken > redis!
+        await refreshTokenToMemory(refreshToken, payload.userId);
 
         res.set({
             Authorization: `Bearer ${accessToken}`,

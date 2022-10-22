@@ -1,5 +1,5 @@
 // const { Comment } = require('./comment.service');
-// const { jwt } = require('../util/jwt');
+// const jwt = require('../util/jwt');
 // const { InvalidParamsError } = require('../util/exception');
 // const { saveProfImg } = require('../util/resize');
 

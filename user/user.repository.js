@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User } = require('../db/models');
 const { Op } = require('sequelize');
 
 
@@ -15,9 +15,9 @@ class UserRepository extends User {
         return User.findAll();
     }
 
-    findEmail = async function(email) {
+    findusername = async function(username) {
         return await User.findOne({
-            where: { email }
+            where: { username }
         });
     }
 
@@ -30,7 +30,7 @@ class UserRepository extends User {
     dupCheck = async function(value) {
         return await User.findOne({
             where: {
-                [Op.or]: [{email: value}, {nickname: value}]
+                [Op.or]: [{username: value}, {nickname: value}]
             }
         });
     }
@@ -51,4 +51,4 @@ class UserRepository extends User {
 }
 
 
-exports.User = new UserRepository();
+module.exports = new UserRepository();

@@ -1,7 +1,7 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 
-const env = require('../config.env');
+const env = require('../../config.env');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -11,7 +11,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true
       },
-      email: {
+      username: {
         type: Sequelize.STRING(40),
         allowNull: false,
         unique: true,

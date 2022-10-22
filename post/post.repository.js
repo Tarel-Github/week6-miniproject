@@ -1,4 +1,4 @@
-const { Post } = require('../models');
+const { Post } = require('../db/models');
 
 class PostRepository {
     findPostById = async (postId) => {
