@@ -14,13 +14,13 @@ module.exports = {
     },
     dropMemory: async function() {
         await sequelize.query(`
-            DROP TABLE refresh;
+            DROP TABLE IF EXISTS refresh;
         `);
     },
     refreshTokenToMemory: async function(refreshToken, userId) {
         await sequelize.query(`
             INSERT INTO refresh (refreshToken, userId)
-            VALUES (${refreshToken}, ${userId});
+            VALUES ('${refreshToken}', ${userId});
         `);
     },
     findUserByRefresh: async function(refreshToken) {

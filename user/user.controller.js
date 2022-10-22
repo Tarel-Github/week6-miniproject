@@ -2,7 +2,8 @@ const User = require('./user.service');
 const jwt = require('../util/jwt');
 const { InvalidParamsError } = require('../util/exception');
 const { saveProfImg } = require('../util/resize');
-const { refreshTokenToMemory } = require('../db/refresh');
+const cache = require('../db/cache');
+const env = require('../config.env');
 
 
 class UserController {
@@ -24,7 +25,7 @@ class UserController {
         const payload = await User.signin({ username, password });
         const accessToken = jwt.sign(payload);
         const refreshToken = jwt.refresh();
-        await refreshTokenToMemory(refreshToken, payload.userId);
+        await cache.refreshTokenToMemory(refreshToken, payload.userId);
 
         res.set({
             Authorization: `Bearer ${accessToken}`,
@@ -85,6 +86,24 @@ class UserController {
             userList
         });
     };
+
+
+    /**
+     * refreshToken 정보를 저장하는 서버 DB를 날려버립니다.
+     * 절대주의!!
+     */
+    reloadCache = async function(req, res, next) {
+        const { PASS } = req.body;
+    
+        if (PASS === env.PASS) {
+            await cache.dropMemory();
+            await cache.createMemory();
+        
+            res.send('CACHE RELOADED');
+        } else {
+            res.send('NOT ALLOWED')
+        }
+    }
 }
 
 
