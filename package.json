@@ -1,7 +1,6 @@
 {
   "name": "mini",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
@@ -26,5 +25,14 @@
   "devDependencies": {
     "nodemon": "^2.0.20",
     "sequelize-cli": "^6.5.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tarel-Github/week6-miniproject.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Tarel-Github/week6-miniproject/issues"
+  },
+  "homepage": "https://github.com/Tarel-Github/week6-miniproject#readme",
+  "description": ""
 }

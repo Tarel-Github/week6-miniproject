@@ -1,8 +1,9 @@
 'use strict';
-const { Model } = require('sequelize');
-
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Comment extends Model {
+  class Like extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,16 +13,16 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Comment.init({
-    commentId: {
+  Like.init({
+    likeId: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.SMALLINT
+      type: DataTypes.SMALLINT.UNSIGNED
     },
     postId: {
       allowNull: false,
-      type: DataTypes.SMALLINT,
+      type: DataTypes.SMALLINT.UNSIGNED,
       references: {
         model: "Post",
         key: "postId",
@@ -30,29 +31,21 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: {
       allowNull: false,
-      type: DataTypes.SMALLINT,
+      type: DataTypes.SMALLINT.UNSIGNED,
       references: {
         model: "User",
         key: "userId",
       },
       onDelete: "cascade",
     },
-    content: {
-      type: DataTypes.STRING(40)
-    },
-    createdAt: {
+    like: {
       allowNull: false,
-      defaultValue: DataTypes.NOW,
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-      type: DataTypes.DATE
+      defaultValue: false,
+      type: DataTypes.BOOLEAN
     }
   }, {
     sequelize,
-    modelName: 'Comment',
+    modelName: 'Like',
   });
-  return Comment;
+  return Like;
 };
