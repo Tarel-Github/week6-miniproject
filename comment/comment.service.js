@@ -17,7 +17,7 @@ class CommentService{
 
     //덧글 달기
     createComment = async (content, userId, postId) => {
-        const createComment = await this.commentRepository.createComment(content, userId, postId);
+        const createComment = await this.commentRepository.createComment(content,/* userId,*/ postId);
         return createComment
     }
 
@@ -32,7 +32,6 @@ class CommentService{
         const createComment = await this.commentRepository.deleteComment(commentId, userId);
         return createComment
     }
-
 }
 
 module.exports = CommentService;
