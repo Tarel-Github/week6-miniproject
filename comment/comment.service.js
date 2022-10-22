@@ -1,4 +1,4 @@
-const CommentRepository = require("../repositories/comments.repository");//리포지토리의 내용을 가져와야한다.
+const CommentRepository = require("./comment.repository");//리포지토리의 내용을 가져와야한다.
 
 class CommentService{
     commentRepository = new CommentRepository();
@@ -9,29 +9,30 @@ class CommentService{
         return findComment;
     }
 
-    // //덧글 달 게시글을 찾기
-    // findPost = async (postId) => {
-    //     const findPost = await this.commentRepository.findPostById(postId);
-    //     return findPost;
-    // }
+    //덧글 달 게시글을 찾기
+    findPost = async (postId) => {
+        const findPost = await this.commentRepository.findPostById(postId);
+        return findPost;
+    }
 
-    // //덧글 달기
-    // createComment = async (content, userId, postId) => {
-    //     const createComment = await this.commentRepository.createComment(content, userId, postId);
-    //     return createComment
-    // }
+    //덧글 달기
+    createComment = async (content, userId, postId) => {
+        const createComment = await this.commentRepository.createComment(content, userId, postId);
+        return createComment
+    }
 
-    // //덧글 수정하기
-    // updateComment= async (commentId, content, userId) => {
-    //     const createComment = await this.commentRepository.updateComment(commentId, content, userId);
-    //     return createComment
-    // }
+    //덧글 수정하기
+    updateComment= async (commentId, content, userId) => {
+        const createComment = await this.commentRepository.updateComment(commentId, content, userId);
+        return createComment
+    }
 
-    // //덧글 삭제하기
-    // deleteComment= async (commentId, userId) => {
-    //     const createComment = await this.commentRepository.deleteComment(commentId, userId);
-    //     return createComment
-    // }
+    //덧글 삭제하기
+    deleteComment= async (commentId, userId) => {
+        const createComment = await this.commentRepository.deleteComment(commentId, userId);
+        return createComment
+    }
+
 }
 
 module.exports = CommentService;
