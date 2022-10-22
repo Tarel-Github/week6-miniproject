@@ -15,6 +15,7 @@ class PostsController {
     }
 
     uploadPost = async(req,res,next)=>{
+<<<<<<< Updated upstream
         // const {user} = res.app.locals;
         const userId = 1
         const categoryId = 2
@@ -28,6 +29,18 @@ class PostsController {
         const categoryId = 2
         const {title, contents} = req.body;
         const updatePostData = await this.postService.updatePost(postId, userId, categoryId, title, contents)
+=======
+        // const {user} = res.locals;
+        // console.log(user)
+        const { title, contents } = req.body;
+        const uploadPostData = await this.postService.uploadPost(title, contents);
+        res.status(201).json({data : uploadPostData});
+    }
+    updatePost = async(req,res,next)=>{
+        const {postId} = req.params;
+        const {title, contents} = req.body;
+        const updatePostData = await this.postService.updatePost(postId, title, contents)
+>>>>>>> Stashed changes
         res.status(201).json({data : updatePostData});
     }
     deletePost = async(req,res,next)=>{

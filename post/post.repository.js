@@ -5,6 +5,7 @@ class PostRepository {
         return await Post.findByPk(postId);
     }
 
+<<<<<<< Updated upstream
     findAllPost = async()=>{
         return await Post.findAll({
             attributes: { exclude: ['contents'] }, order: [['createdAt', 'DESC']]
@@ -21,6 +22,16 @@ class PostRepository {
 
     deletePost = async(postId)=>{
         return await Post.destroy({where:{postId}})
+=======
+    uploadPost = async(title, contents)=>{
+        const uploadPostData = await Post.create({title, contents})
+        return uploadPostData;
+    }
+
+    updatePost = async(postId, title, contents)=>{
+        const updatePostData = await Post.update({contents,title},{where:{postId}})
+        return updatePostData;
+>>>>>>> Stashed changes
     }
 }
 

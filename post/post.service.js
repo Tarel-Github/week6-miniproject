@@ -3,6 +3,7 @@ const PostRepository = require('./post.repository');
 class PostService {
     postRepository = new PostRepository();
 
+<<<<<<< Updated upstream
     findAllPost = async()=>{
         return await this.postRepository.findAllPost({})
     }
@@ -25,6 +26,10 @@ class PostService {
     uploadPost = async(userId, categoryId, title, contents)=>{
         const uploadPostData = await this.postRepository.uploadPost(userId, categoryId, title, contents)
         console.log(uploadPostData)
+=======
+    uploadPost = async(title, contents)=>{
+        const uploadPostData = await this.postRepository.uploadPost(title, contents)
+>>>>>>> Stashed changes
         if(!title || !contents) throw new Error ("게시글 내용을 작성해주세요")
         // 로직 수행 후 사용자에게 보여 줄 데이터 가공
         return {
@@ -39,21 +44,43 @@ class PostService {
         }
     }
 
+<<<<<<< Updated upstream
     updatePost = async(postId, userId, categoryId,  title, contents)=>{
         await this.postRepository.updatePost(postId, userId, categoryId, title, contents);
+=======
+    updatePost = async(postId, password, title, contents)=>{
+        // const updatePostData = await this.postRepository.updatePost(postId, password, title, contents)
+        // // const findPostId = await this.postRepository.findPostById(postId)
+        // return {
+        //     postId: updatePostData.null,
+        //     // userId: uploadPostData.userId,
+        //     nickname: updatePostData.nickname,
+        //     title: updatePostData.title,
+        //     contents: updatePostData.contents,
+        //     likes: updatePostData.likes,
+        //     createdAt: updatePostData.createdAt,
+        //     updatedAt: updatePostData.updatedAt
+        // }
 
-        const updatePostData = await this.postRepository.findPostById(postId);
+        const findPost = await this.postRepository.findPostById(postId)
+        if(!findPost)throw new Error("게시물이 존재하지 않습니다")
+>>>>>>> Stashed changes
 
+        await this.postRepository.updatePost(postId, title, contents)
+
+        const updatePostData = await this.postRepository.findPostById(postId)
         return {
+<<<<<<< Updated upstream
             postId: updatePostData.postId,
             userId: updatePostData.userId,
             categoryId: updatePostData.categoryId,
+=======
+>>>>>>> Stashed changes
             title: updatePostData.title,
             contents: updatePostData.contents,
-            likes: updatePostData.likes,
             createdAt: updatePostData.createdAt,
-            updatedAt: updatePostData.updatedAt
-        };
+            updatedAt: updatePostData.updatedAt,
+        }
     }
 
     deletePost = async(postId)=>{
