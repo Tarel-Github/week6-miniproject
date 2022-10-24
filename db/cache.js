@@ -6,7 +6,8 @@ module.exports = {
         await sequelize.query(`
             CREATE TABLE refresh (
                 refreshToken VARCHAR(255), 
-                userId SMALLINT, 
+                userId SMALLINT,
+                timestamp BIGINT,
                 UNIQUE(refreshToken),
                 FOREIGN KEY(userId) REFERENCES Users(userId)
             ) ENGINE = MEMORY;
@@ -18,9 +19,10 @@ module.exports = {
         `);
     },
     refreshTokenToMemory: async function(refreshToken, userId) {
+        const time = Date.now() + 60*60*24;
         await sequelize.query(`
-            INSERT INTO refresh (refreshToken, userId)
-            VALUES ('${refreshToken}', ${userId});
+            INSERT INTO refresh (refreshToken, userId, timestamp)
+            VALUES ('${refreshToken}', ${userId}, ${time});
         `);
     },
     findUserByRefresh: async function(refreshToken) {
@@ -34,5 +36,12 @@ module.exports = {
 
         if (result[0].length === 0) return null;
         return result[0][0];
+    },
+    refreshMemory: async function() {
+        const time = Date.now();
+        await sequelize.query(`
+            DELETE FROM refresh
+            WHERE timestamp < ${time};
+        `);
     }
 }
