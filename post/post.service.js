@@ -51,6 +51,7 @@ class PostService {
             categoryId: updatePostData.categoryId,
             title: updatePostData.title,
             contents: updatePostData.contents,
+            likes: updatePostData.likes,
             createdAt: updatePostData.createdAt,
             updatedAt: updatePostData.updatedAt,
         }

@@ -19,6 +19,7 @@ class PostsController {
         const userId = 1
         const categoryId = 2
         const { title, contents } = req.body;
+        // const {categoryId, title, contents } = req.body;
         const uploadPostData = await this.postService.uploadPost(userId, categoryId, title, contents);
         res.status(201).json({data : uploadPostData, msg : "게시글이 작성되었습니다"});
     }
