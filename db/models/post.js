@@ -37,10 +37,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     categoryId : {
       type:  DataTypes.SMALLINT.UNSIGNED,
-      // references: {
-      //   model: "Category",
-      //   key: "categoryId",
-      // },
+      references: {
+        model: "Category",
+        key: "categoryId",
+      },
       allowNull: false,
     },
     title: {

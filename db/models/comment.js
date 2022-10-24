@@ -17,11 +17,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.SMALLINT
+      type: DataTypes.SMALLINT.UNSIGNED
     },
     postId: {
       allowNull: false,
-      type: DataTypes.SMALLINT,
+      type: DataTypes.SMALLINT.UNSIGNED,
       references: {
         model: "Post",
         key: "postId",
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: {
       allowNull: false,
-      type: DataTypes.SMALLINT,
+      type: DataTypes.SMALLINT.UNSIGNED,
       references: {
         model: "User",
         key: "userId",

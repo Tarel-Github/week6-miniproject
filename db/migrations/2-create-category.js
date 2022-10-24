@@ -7,9 +7,13 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.SMALLINT
+        // references: {
+        //   model: "Posts",
+        //   key: "categoryId",
+        // },
+        type: Sequelize.SMALLINT.UNSIGNED
       },
-      field: {
+      name: {
         type: Sequelize.STRING(20)
       },
       createdAt: {

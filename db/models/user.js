@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.init({
     userId: {
-      type: DataTypes.SMALLINT,
+      type: DataTypes.SMALLINT.UNSIGNED,
       autoIncrement: true,
       primaryKey: true
     },

@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Category.init({
-    categoryId: DataTypes.SMALLINT,
-    field: DataTypes.STRING(20)
+    categoryId: DataTypes.SMALLINT.UNSIGNED,
+    name: DataTypes.STRING(20)
   }, {
     sequelize,
     modelName: 'Category',

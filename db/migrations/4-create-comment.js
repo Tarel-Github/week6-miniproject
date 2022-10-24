@@ -11,15 +11,15 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.DataTypes.SMALLINT
+        type: Sequelize.SMALLINT.UNSIGNED
       },
       postId: {
-        type: Sequelize.DataTypes.SMALLINT,
+        type: Sequelize.SMALLINT.UNSIGNED,
         allowNull: false,
         onDelete: "cascade",
       },
       userId: {
-        type: Sequelize.DataTypes.SMALLINT,
+        type: Sequelize.SMALLINT.UNSIGNED,
         allowNull: false,
         onDelete: "cascade",
       },

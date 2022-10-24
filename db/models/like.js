@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Like extends Model {
     /**
@@ -11,41 +9,43 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+    //   this.belongsTo(models.User, { foreignKey: 'userId' });
+    //   this.belongsTo(models.Post, { foreignKey: 'postId' });
     }
   }
-  Like.init({
-    likeId: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.SMALLINT.UNSIGNED
-    },
-    postId: {
-      allowNull: false,
-      type: DataTypes.SMALLINT.UNSIGNED,
-      references: {
-        model: "Post",
-        key: "postId",
+  Like.init(
+    {
+      LikeId: {
+        allowNull: false, // NOT NULL, Null을 허용하지 않음
+        autoIncrement: true, // AUTO_INCREMENT
+        primaryKey: true, // PRIMARY KEY, 기본키
+        unique: true, // UNIQUE, 유일한 값만 존재할 수 있음
+        type: DataTypes.SMALLINT.UNSIGNED,
       },
-      onDelete: "cascade",
-    },
-    userId: {
-      allowNull: false,
-      type: DataTypes.SMALLINT.UNSIGNED,
-      references: {
-        model: "User",
-        key: "userId",
+      postId: {
+        type: DataTypes.SMALLINT.UNSIGNED,
+        allowNull: false,
+        references: {
+          model: 'Post',
+          key: 'postId',
+        },
+        onDelete: 'cascade',
       },
-      onDelete: "cascade",
+      userId: {
+        type: DataTypes.SMALLINT.UNSIGNED,
+        allowNull: false,
+        references: {
+          model: 'User',
+          key: 'userId',
+        },
+        onDelete: 'cascade',
+      },
     },
-    like: {
-      allowNull: false,
-      defaultValue: false,
-      type: DataTypes.BOOLEAN
+    {
+      sequelize,
+      modelName: 'Like',
+      timestamps: false,
     }
-  }, {
-    sequelize,
-    modelName: 'Like',
-  });
+  );
   return Like;
 };
