@@ -1,6 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
-const env = require('../config.env');
+const env = require('../../config.env');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.init({
     userId: {
-      type: DataTypes.SMALLINT.UNSIGNED,
+      type: DataTypes.SMALLINT,
       autoIncrement: true,
       primaryKey: true
     },
@@ -50,16 +50,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: env.ROOT + env.PROF_DIR + 'default_mypage.png'
     },
-    provider: {
-      type: DataTypes.STRING(40),
-      defaultValue: 'local'
-    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'User',
   });
-
+  
   return User;
 };

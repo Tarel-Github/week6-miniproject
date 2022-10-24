@@ -1,13 +1,13 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 
-const env = require('../config.env');
+const env = require('../../config.env');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {
       userId: {
-        type: Sequelize.SMALLINT.UNSIGNED,
+        type: Sequelize.SMALLINT,
         autoIncrement: true,
         primaryKey: true
       },
@@ -33,15 +33,11 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: env.ROOT + env.PROF_DIR + 'default_mypage.png'
       },
-      provider: {
-        type: Sequelize.STRING(40),
-        defaultValue: 'local'
-      },
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE
     });
   },
-
+  
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Users');
   }
