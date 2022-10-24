@@ -21,7 +21,8 @@ class Env extends DbConnection {
         this.SALT_ROUND = Number(process.env.SALT_ROUND);
         this.JWT_KEY = process.env.JWT_KEY;
         this.ROOT = path.resolve(__dirname);
-        this.PROF_DIR = process.env.PROF_DIR
+        this.PROF_DIR = process.env.PROF_DIR;
+        this.PASS = process.env.PASS;
     }
 }
 
