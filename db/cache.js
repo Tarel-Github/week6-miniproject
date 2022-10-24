@@ -29,10 +29,10 @@ module.exports = {
             FROM refresh
             INNER JOIN Users
             ON refresh.userId = Users.userId
-            WHERE refreshToken = ${refreshToken};
+            WHERE refreshToken = '${refreshToken}';
         `);
 
-        if (result.length === 0) return null;
-        return result;
+        if (result[0].length === 0) return null;
+        return result[0][0];
     }
 }

@@ -50,6 +50,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: env.ROOT + env.PROF_DIR + 'default_mypage.png'
     },
+    provider: {
+      type: DataTypes.STRING(40),
+      defaultValue: 'local'
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
   }, {

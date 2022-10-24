@@ -1,8 +1,9 @@
+const passport = require('passport');
 const User = require('./user.service');
-const jwt = require('../util/jwt');
-const { InvalidParamsError } = require('../util/exception');
-const { saveProfImg } = require('../util/resize');
 const cache = require('../db/cache');
+const jwt = require('../util/jwt');
+const ResizeAndSave = require('../util/resize');
+const { InvalidParamsError } = require('../util/exception');
 const env = require('../config.env');
 
 
@@ -19,21 +20,63 @@ class UserController {
         });
     }
 
-    signin = async function(req, res, next) {
-        const { username, password } = req.body;        
+    // signin = async function(req, res, next) {
+    //     const { username, password } = req.body;        
 
-        const payload = await User.signin({ username, password });
+    //     const payload = await User.signin({ username, password });
+    //     const accessToken = jwt.sign(payload);
+    //     const refreshToken = jwt.refresh();
+    //     await cache.refreshTokenToMemory(refreshToken, payload.userId);
+
+    //     res.set({
+    //         Authorization: `Bearer ${accessToken}`,
+    //         refreshToken
+    //     });
+    //     res.status(200).json({
+    //         message: '로그인되었습니다.'
+    //     });
+    // }
+
+    localSign = async function(req, res, next) {
+        console.log('req.user: ', req.user);
+        const payload = req.user;
         const accessToken = jwt.sign(payload);
         const refreshToken = jwt.refresh();
         await cache.refreshTokenToMemory(refreshToken, payload.userId);
 
         res.set({
             Authorization: `Bearer ${accessToken}`,
-            refreshToken
+            refreshToken: `Bearer ${refreshToken}`
         });
         res.status(200).json({
             message: '로그인되었습니다.'
         });
+    }
+
+    kakaoSign = async function(req, res, next) {
+        try {
+            passport.authenticate(
+                'kakao',
+                { failureRedirect: '/user' }, // 실패하면 '/user/login''로 돌아감.
+                async (err, user, info) => {
+                    if (err) return next(err);
+    
+                    const accessToken = jwt.sign(user);
+                    const refreshToken = jwt.refresh();
+                    await cache.refreshTokenToMemory(refreshToken, user.userId);
+
+                    res.set({
+                        Authorization: `Bearer ${accessToken}`,
+                        refreshToken: `Bearer ${refreshToken}`
+                    });
+                    res.status(200).json({
+                        message: '로그인되었습니다.'
+                    });
+                }
+            )(req, res, next);
+          } catch (error) {
+            next(error);
+          }
     }
 
     dupCheck = async function(req, res, next) {
@@ -66,9 +109,10 @@ class UserController {
         // const { userId } = req.app.locals.user;
         const userId = 1;
 
-        if (profImg.mimetype.split('/')[0] !== 'image') throw new InvalidParamsError('이미지를 업로드해 주세요.');
+        if (profImg.mimetype.split('/')[0] !== 'image')
+            throw new InvalidParamsError('이미지를 업로드해 주세요.');
 
-        const imgPath = await saveProfImg(userId, profImg);
+        const imgPath = await ResizeAndSave.profImg(userId, profImg);
         const profImgPath = await User.profileUpdate(userId, imgPath);
         console.log(imgPath);
 
@@ -83,7 +127,8 @@ class UserController {
         const userList = await User.findAll();
 
         res.status(200).json({
-            userList
+            userList,
+            session: req.session
         });
     };
 

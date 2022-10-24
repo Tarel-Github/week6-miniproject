@@ -33,6 +33,10 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: env.ROOT + env.PROF_DIR + 'default_mypage.png'
       },
+      provider: {
+        type: Sequelize.STRING(40),
+        defaultValue: 'local'
+      },
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE
     });
