@@ -19,7 +19,7 @@ class CommentsController {
               } 
             const post = await this.commentService.findPost(postId)//덧글을 달 포스트를 찾는다.
             const a = post.postId  
-            const createCommentData = await this.commentService.createComment(content, /*userId,*/ a )
+            const createCommentData = await this.commentService.createComment(content, userId, a )
             res.status(201).send({data: createCommentData});  
        
         }catch(error){
