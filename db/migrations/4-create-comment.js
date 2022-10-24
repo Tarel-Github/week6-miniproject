@@ -6,37 +6,39 @@ module.exports = {
    * @param {import("sequelize")} Sequelize - Sequelize
    * **/
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Likes', {
-      likeId: {
+    await queryInterface.createTable('Comments', {
+      commentId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.SMALLINT
+        type: Sequelize.DataTypes.SMALLINT
       },
       postId: {
         type: Sequelize.DataTypes.SMALLINT,
         allowNull: false,
-        references: {
-          model:"Posts",
-          key:"postId",
-        },
         onDelete: "cascade",
       },
       userId: {
         type: Sequelize.DataTypes.SMALLINT,
         allowNull: false,
-        references: {
-          model:"Users",
-          key:"userId",
-        },
         onDelete: "cascade",
       },
-      like: {
-        type: Sequelize.BOOLEAN
+      content: {
+        type: Sequelize.DataTypes.STRING(40),
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.DataTypes.NOW,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.DataTypes.NOW,
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Likes');
+    await queryInterface.dropTable('Comments');
   }
 };

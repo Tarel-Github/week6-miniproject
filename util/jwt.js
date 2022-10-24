@@ -26,4 +26,4 @@ class Jwt {
 }
 
 
-exports.jwt = new Jwt();
+module.exports = new Jwt();

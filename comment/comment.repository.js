@@ -1,4 +1,4 @@
-const { User, Post, Comment } = require('../models');          //모델 데이터를 가져오고
+const { User, Post, Comment } = require('../db/models');          //모델 데이터를 가져오고
 
 class CommentRepository {
 

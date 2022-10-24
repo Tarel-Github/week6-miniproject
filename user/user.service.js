@@ -1,4 +1,4 @@
-const { User } = require('./user.repository');
+const User = require('./user.repository');
 const bcrypt = require('bcrypt');
 const env = require('../config.env');
 const { InvalidParamsError } = require('../util/exception');
@@ -12,15 +12,15 @@ class UserService {
         return await User.signup(user);
     }
 
-    signin = async function({ email, password }) {
-        const user = await User.findEmail(email);
+    signin = async function({ username, password }) {
+        const user = await User.findusername(username);
         if (user === null || !(await bcrypt.compare(password, user.get().password))) {
             throw new Error('아이디, 비밀번호가 일치하지 않습니다.');
         }
 
         return {
             userId: user.userId,
-            email,
+            username,
             nickname: user.nickname
         };
     }
@@ -58,4 +58,4 @@ class UserService {
 }
 
 
-exports.User = new UserService();
+module.exports = new UserService();

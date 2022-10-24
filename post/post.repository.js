@@ -1,19 +1,26 @@
-const { Post } = require('../models');
+const { Post } = require('../db/models');
 
 class PostRepository {
     findPostById = async (postId) => {
-        const post = await Post.findByPk(postId);
-        return post;
+        return await Post.findByPk(postId);
     }
 
-    uploadPost = async(nickname, password, title, content)=>{
-        const uploadPostData = await Post.create({nickname, password, title, content})
-        return uploadPostData;
+    findAllPost = async()=>{
+        return await Post.findAll({
+            attributes: { exclude: ['contents'] }, order: [['createdAt', 'DESC']]
+        })
     }
 
-    updatePost = async(postId, password, title, content)=>{
-        const updatePostData = await Post.update({content,title},{where:{postId,password}})
-        return updatePostData;
+    uploadPost = async(userId, categoryId, title, contents)=>{
+        return await Post.create({categoryId, userId, title, contents})
+    }
+
+    updatePost = async(userId, categoryId, postId, title, contents)=>{
+        return await Post.update({title, contents},{where:{postId, userId, categoryId, }})
+    }
+
+    deletePost = async(postId)=>{
+        return await Post.destroy({where:{postId}})
     }
 }
 
