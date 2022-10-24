@@ -15,22 +15,10 @@ class UserRepository extends User {
         return User.findAll();
     }
 
-    findusername = async function(username) {
-        return await User.findOne({
-            where: { username }
-        });
-    }
-
-    findNickname = async function(nickname) {
-        return await User.findOne({
-            where: { nickname }
-        });
-    }
-
-    dupCheck = async function(value) {
+    findOne = async function(value) {
         return await User.findOne({
             where: {
-                [Op.or]: [{username: value}, {nickname: value}]
+                [Op.or]: [{userId: value}, {username: value}, {nickname: value}]
             }
         });
     }

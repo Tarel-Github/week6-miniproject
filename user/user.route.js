@@ -1,11 +1,13 @@
 const { Router } = require('express');
 const passport = require('passport');
-const { User } = require('./user.controller');
+const User = require('./user.controller');
 
 const router = Router();
 
 
 router.get('/user', User.findAll);
+
+router.get('/user/:userId', User.findOne)
 
 router.post('/signup', User.signup);
 
@@ -17,9 +19,9 @@ router.get('/callback', User.kakaoSign);
 
 router.post('/dup', User.dupCheck);
 
-router.patch('/profnick', User.nicknameUpdate);
+router.patch('/profile/nickname', User.nicknameUpdate);
 
-router.patch('/profimg', User.profileUpdate);
+router.patch('/profile/image', User.profileUpdate);
 
 router.delete('/:userId', User.deleteUser);
 

@@ -127,10 +127,19 @@ class UserController {
         const userList = await User.findAll();
 
         res.status(200).json({
-            userList,
+            data: userList,
             session: req.session
         });
     };
+
+    findOne = async function(req, res, next) {
+        const { userId } = req.params;
+        const user = await User.findOne(userId);
+
+        res.status(200).json({
+            data: user
+        });
+    }
 
 
     /**
@@ -152,4 +161,4 @@ class UserController {
 }
 
 
-exports.User = new UserController();
+module.exports = new UserController();

@@ -4,6 +4,8 @@ const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const passportConfig = require('./passport');
+const { corsHeader } = require('./middlewares/setCorsHeader');
+const { errorHandler, errorLogger } = require('./middlewares/errorHandler');
 const path = require('path');
 const env = require('./config.env');
 
@@ -16,6 +18,7 @@ class App {
         this.app = express();
         this.middleware();
         this.router();
+        this.errorHandler();
     }
 
     middleware() {
@@ -46,7 +49,13 @@ class App {
     }
 
     router() {
+        this.app.use(corsHeader);
         this.app.use('/', indexRouter);
+    }
+
+    errorHandler() {
+        this.app.use(errorLogger);
+        this.app.use(errorHandler);
     }
 }
 
