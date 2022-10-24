@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "qwe123123",
-    "database": "week6_mini",
-    "host": "express-db.cbihhftgxnhy.ap-northeast-2.rds.amazonaws.com",
+    "password": null,
+    "database": "database_development",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {

@@ -11,5 +11,4 @@ router.use('/posts/', categoryRouter);
 router.use('/posts/', postsRouter);
 router.use('/', userRouter);
 
-
 module.exports = router;
