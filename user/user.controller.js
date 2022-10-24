@@ -30,7 +30,7 @@ class UserController {
             refreshToken
         });
         res.status(200).json({
-            message: '로그인되었습니다.'
+            message: '로그인되었습니다.',accessToken    //이부분에 엑세스 토큰 추가
         });
     }
 

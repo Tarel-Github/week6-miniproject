@@ -1,5 +1,4 @@
 const CommentRepository = require("./comment.repository");//리포지토리의 내용을 가져와야한다.
-
 class CommentService{
     commentRepository = new CommentRepository();
 
