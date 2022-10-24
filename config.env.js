@@ -18,11 +18,17 @@ class Env extends DbConnection {
     constructor() {
         super();
         this.PORT = Number(process.env.PORT);
+        this.SESSION_KEY = process.env.SESSION_KEY;
+
         this.SALT_ROUND = Number(process.env.SALT_ROUND);
         this.JWT_KEY = process.env.JWT_KEY;
         this.ROOT = path.resolve(__dirname);
         this.PROF_DIR = process.env.PROF_DIR;
+
         this.PASS = process.env.PASS;
+
+        this.REST_API_KEY = process.env.REST_API_KEY;
+        this.REDIRECT_URI = process.env.REDIRECT_URI;
     }
 }
 

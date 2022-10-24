@@ -38,15 +38,7 @@ class UserService {
     }
 
     profileUpdate = async function(userId, imgPath) {
-        // const splitName = name.split('.');
-        // const extension = splitName[splitName.length-1];
-        // const filename = `${userId}.${extension}`;
-        // const profImgPath = env.ROOT + env.PROF_DIR + filename;
-
-        const result = await User.updateProfImg(userId, imgPath);
-        console.log('service result: ', result);
-
-        return result;
+        return await User.updateProfImg(userId, imgPath);
     }
 
     deleteUser = async function() {};
