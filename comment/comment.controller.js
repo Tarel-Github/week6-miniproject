@@ -17,12 +17,6 @@ class CommentsController {
                 res.status(400).send({errorMessage: '댓글 내용을 입력해주세요'});//덧글 내용이 없다면 덧글을 입력해달라는 메시지 출력
                 return;
               } 
-            // const user=res.locals.user; 
-            
-            // if(!user){                   
-            //     res.status(400).send({errorMessage:"코멘트 작성 거부, 로그인 하시기 바랍니다."})
-            //     return;  
-            // }                  //로그인 유저의 아이디를 가져옴
             const post = await this.commentService.findPost(postId)//덧글을 달 포스트를 찾는다.
             const a = post.postId  
             const createCommentData = await this.commentService.createComment(content, /*userId,*/ a )
