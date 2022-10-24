@@ -1,5 +1,4 @@
 const CommentRepository = require("./comment.repository");//리포지토리의 내용을 가져와야한다.
-
 class CommentService{
     commentRepository = new CommentRepository();
 
@@ -17,7 +16,7 @@ class CommentService{
 
     //덧글 달기
     createComment = async (content, userId, postId) => {
-        const createComment = await this.commentRepository.createComment(content, userId, postId);
+        const createComment = await this.commentRepository.createComment(content,/* userId,*/ postId);
         return createComment
     }
 
@@ -32,7 +31,6 @@ class CommentService{
         const createComment = await this.commentRepository.deleteComment(commentId, userId);
         return createComment
     }
-
 }
 
 module.exports = CommentService;

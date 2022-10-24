@@ -2,7 +2,6 @@ const { User, Post, Comment } = require('../db/models');          //모델 데�
 
 class CommentRepository {
 
-
     //덧글 찾기
     findComment = async (postId) =>{
         const comments = await Comment.findAll({where: { postId },   
@@ -20,7 +19,7 @@ class CommentRepository {
 
     //덧글 추가
     createComment = async (content, userId, postId) => {
-        const createCommentData = await Comment.create({content, userId, postId});
+        const createCommentData = await Comment.create({content, /*userId,*/ postId});
         return createCommentData;
     }
 
