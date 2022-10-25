@@ -28,7 +28,7 @@ class Env extends DbConnection {
         this.PASS = process.env.PASS;
 
         this.REST_API_KEY = process.env.REST_API_KEY;
-        this.REDIRECT_URI = process.env.REDIRECT_URI;
+        this.REDIRECT_URI = path.join(__dirname, 'auth/kakao/callback');
     }
 }
 

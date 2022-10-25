@@ -15,7 +15,7 @@ router.post('/signin', passport.authenticate('local'), User.localSign);
 
 router.get('/auth/kakao', passport.authenticate('kakao'));
 
-router.get('/callback', User.kakaoSign);
+router.get('/auth/kakao/callback', User.kakaoSign);
 
 router.post('/dup', User.dupCheck);
 

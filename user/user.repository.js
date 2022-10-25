@@ -22,6 +22,18 @@ class UserRepository extends Users {
             }
         });
     }
+    
+    findKakaoUser = async function(username) {
+        return await Users.findOne({
+            where: { 
+                username: username,
+                provider: 'kakao'
+            },
+            attributes: {
+                exclude: ['password']
+            }
+        });
+    }
 
     updateNickname = async function({ userId, nickname }) {
         return await Users.update({ nickname }, {
