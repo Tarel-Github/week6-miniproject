@@ -3,7 +3,7 @@
 class SetHeader {
     corsHeader = function(req, res, next) {
         const origin = req.headers?.origin;
-        console.log(origin);
+
         res.set({
             'Access-Control-Allow-Headers': 'X-Requested-With',
             'Access-Control-Allow-Methods': '*',

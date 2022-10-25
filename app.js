@@ -1,15 +1,15 @@
 const express = require('express');
+const path = require('path');
+const env = require('./config.env');
 const session = require('express-session');
 const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const passportConfig = require('./passport');
-const { corsHeader } = require('./middlewares/setCorsHeader');
-const { errorHandler, errorLogger } = require('./middlewares/errorHandler');
-const path = require('path');
-const env = require('./config.env');
 
+const { corsHeader } = require('./middlewares/setCorsHeader');
 const indexRouter = require('./index');
+const { errorHandler, errorLogger } = require('./middlewares/errorHandler');
 
 
 class App {
@@ -49,6 +49,7 @@ class App {
     }
 
     router() {
+        this.app.disable('x-powered-by');
         this.app.use(corsHeader);
         this.app.use('/', indexRouter);
     }

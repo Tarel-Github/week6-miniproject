@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-    //   this.belongsTo(models.User, { foreignKey: 'userId' });
-    //   this.belongsTo(models.Post, { foreignKey: 'postId' });
+    //   this.belongsTo(models.Users, { foreignKey: 'userId' });
+    //   this.belongsTo(models.Posts, { foreignKey: 'postId' });
     }
   }
   Like.init(
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.SMALLINT.UNSIGNED,
         allowNull: false,
         references: {
-          model: 'Post',
+          model: 'Posts',
           key: 'postId',
         },
         onDelete: 'cascade',
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.SMALLINT.UNSIGNED,
         allowNull: false,
         references: {
-          model: 'User',
+          model: 'Users',
           key: 'userId',
         },
         onDelete: 'cascade',
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Like',
+      modelName: 'Likes',
       timestamps: false,
     }
   );

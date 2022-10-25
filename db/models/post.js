@@ -10,14 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // this.belongsTo(models.User,{
-      //   as: 'User',
-      //   foreignKey: 'userId'
-      // });
-      // this.belongsTo(models.Category,{
-      //   as: 'Category',
-      //   foreignKey: 'categoryId'
-      // });
+      this.belongsTo(models.Users,{
+        foreignKey: 'userId'
+      });
+      this.belongsTo(models.Categories,{
+        foreignKey: 'categoryId'
+      });
     }
   }
   Post.init({
@@ -30,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.SMALLINT.UNSIGNED,
       references: {
-        model: "User",
+        model: "Users",
         key: "userId",
       },
       allowNull: false,
@@ -38,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     categoryId : {
       type:  DataTypes.SMALLINT.UNSIGNED,
       references: {
-        model: "Category",
+        model: "Categories",
         key: "categoryId",
       },
       allowNull: false,
@@ -62,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Post',
+    modelName: 'Posts',
   });
   return Post;
 };

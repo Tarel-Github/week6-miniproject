@@ -33,7 +33,7 @@ module.exports = {
             ON refresh.userId = Users.userId
             WHERE refreshToken = '${refreshToken}';
         `);
-        console.log(result[0]);
+        
         if (result[0].length === 0) return null;
         return result[0][0];
     },
@@ -43,5 +43,6 @@ module.exports = {
             DELETE FROM refresh
             WHERE timestamp < ${time};
         `);
+        console.log('MEMORY REFRESHED');
     }
 }

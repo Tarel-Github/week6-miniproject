@@ -1,4 +1,4 @@
-const {Post} = require('../db/models/category')
+const {Posts} = require('../db/models')
 
 class CategoryRepository {
 

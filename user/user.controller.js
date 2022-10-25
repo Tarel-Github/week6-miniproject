@@ -4,7 +4,6 @@ const cache = require('../db/cache');
 const jwt = require('../util/jwt');
 const ResizeAndSave = require('../util/resize');
 const { InvalidParamsError } = require('../util/exception');
-const env = require('../config.env');
 
 
 class UserController {
@@ -139,24 +138,6 @@ class UserController {
         res.status(200).json({
             data: user
         });
-    }
-
-
-    /**
-     * refreshToken 정보를 저장하는 서버 DB를 날려버립니다.
-     * 절대주의!!
-     */
-    reloadCache = async function(req, res, next) {
-        const { PASS } = req.body;
-    
-        if (PASS === env.PASS) {
-            await cache.dropMemory();
-            await cache.createMemory();
-        
-            res.send('CACHE RELOADED');
-        } else {
-            res.send('NOT ALLOWED')
-        }
     }
 }
 

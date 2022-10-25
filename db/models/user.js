@@ -7,16 +7,16 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define association here
-      // this.hasMany(models.Post, {
-      //   as: 'Post',
-      //   foreignKey: 'userId'
-      // });
+      this.hasMany(models.Posts, {
+        as: 'Posts',
+        foreignKey: 'userId'
+      });
       // this.hasMany(models.Comment, {
-      //   as: 'Comment',
+      //   as: 'Comments',
       //   foreignKey: 'userId'
       // });
       // this.hasMany(models.Like, {
-      //   as: 'Like',
+      //   as: 'Likes',
       //   foreignKey: 'userId'
       // });
     }
@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'User',
+    modelName: 'Users',
   });
   
   return User;

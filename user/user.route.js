@@ -30,7 +30,7 @@ router.delete('/:userId', User.deleteUser);
  * refreshToken 정보를 저장하는 서버 DB를 날려버립니다.
  * 절대주의!!
  */
-router.get('/reloadCache', User.reloadCache);
+// router.get('/reloadCache', User.reloadCache);
 
 
 
