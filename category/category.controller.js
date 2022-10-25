@@ -6,8 +6,10 @@ class CategoryController {
     getCategoryPosts = async(req,res,next)=>{
         // feild 도 body?
         const {categoryId} = req.params;
-        const {name} = res.body;
-
+        const name = "자기관리"
+        // const {name} = res.body;
+        const CategoryPost = await this.categoryService.getCategoryPost(categoryId, name)
+        res.status(200).json({data: CategoryPost})
     }
 }
 
