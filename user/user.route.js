@@ -11,12 +11,6 @@ router.get('/user/:userId', User.findOne)
 
 router.post('/signup', User.signup);
 
-router.post('/signin', passport.authenticate('local'), User.localSign);
-
-router.get('/auth/kakao', passport.authenticate('kakao'));
-
-router.get('/auth/kakao/callback', User.kakaoSign);
-
 router.post('/dup', User.dupCheck);
 
 router.patch('/profile/nickname', User.nicknameUpdate);
@@ -25,6 +19,14 @@ router.patch('/profile/image', User.profileUpdate);
 
 router.delete('/:userId', User.deleteUser);
 
+
+router.post('/signin', passport.authenticate('local'), User.localSign);
+
+router.get('/auth/kakao', passport.authenticate('kakao'));
+
+router.get('/auth/kakao/callback', User.kakaoSign);
+
+router.get('/signout', User.signout);
 
 /**
  * refreshToken 정보를 저장하는 서버 DB를 날려버립니다.

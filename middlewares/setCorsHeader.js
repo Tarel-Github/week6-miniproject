@@ -7,7 +7,7 @@ class SetHeader {
         res.set({
             'Access-Control-Allow-Headers': 'X-Requested-With',
             'Access-Control-Allow-Methods': '*',
-            'Access-Control-Allow-Control': origin || ['http://localhost:3000']
+            'Access-Control-Allow-Origin': origin || ['http://localhost:3000']
         });
         next();
     }

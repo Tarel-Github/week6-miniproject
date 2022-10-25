@@ -23,7 +23,7 @@ module.exports = function() {
                         userId: user.get().userId,
                         username: user.get().username,
                         nickname: user.get().nickname
-                    }
+                    };
                     return done(null, payload);
                 } else {
                     const newUser = await User.signup({
@@ -37,8 +37,8 @@ module.exports = function() {
                         userId: newUser.get().userId,
                         username: newUser.get().username,
                         nickname: newUser.get().nickname
-                    }
-                    return done(null, payload)
+                    };
+                    return done(null, payload);
                 }
 
             } catch (error) {
