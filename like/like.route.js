@@ -8,7 +8,7 @@ const likesController = new LikesController();
 //좋아요 게시글 조회
 router.get('/', /*authMiddleware,*/likesController.getPostLike)
 //좋아요 등록 혹은 취소
-router.put('/:postId/like', /*authMiddleware,*/ likesController.updatePostLike)
+router.put('/:postId', /*authMiddleware,*/ likesController.updatePostLike)
 
 
 
