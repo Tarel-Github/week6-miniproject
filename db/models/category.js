@@ -17,10 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Category.init({
-<<<<<<< Updated upstream
-    categoryId: DataTypes.SMALLINT,
-    field: DataTypes.STRING(20)
-=======
     categoryId: {
       type: DataTypes.SMALLINT.UNSIGNED,
       primaryKey:true,
@@ -28,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     name: DataTypes.STRING(20)
->>>>>>> Stashed changes
   }, {
     sequelize,
     modelName: 'Category',

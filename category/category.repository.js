@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-const {Post} = require('../models/category')
-=======
 const {Post, Category} = require('../db/models')
->>>>>>> Stashed changes
 
 class CategoryRepository {
     findCategoryPost = async(categoryId)=>{
