@@ -6,6 +6,8 @@ const categoryRouter = require('./category/category.route');
 const postsRouter = require('./post/post.route');
 const userRouter = require('./user/user.route');
 
+
+
 router.use('/comments', commentRouter);
 router.use('/posts/', categoryRouter);
 router.use('/posts/', postsRouter);

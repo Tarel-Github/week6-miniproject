@@ -14,10 +14,18 @@ module.exports = {
       },
       userId: {
         type: Sequelize.SMALLINT.UNSIGNED,
+        references: {
+          model: "Users",
+          key: "userId",
+        },
         allowNull: false
       },
       categoryId : {
         type: Sequelize.SMALLINT.UNSIGNED,
+        references: {
+          model: "Categories",
+          key: "categoryId",
+        },
         allowNull: false
       },
       title: {

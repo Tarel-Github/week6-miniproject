@@ -7,16 +7,16 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define association here
-      // this.hasMany(models.Post, {
-      //   as: 'Post',
-      //   foreignKey: 'userId'
-      // });
+      this.hasMany(models.Posts, {
+        as: 'Posts',
+        foreignKey: 'userId'
+      });
       // this.hasMany(models.Comment, {
-      //   as: 'Comment',
+      //   as: 'Comments',
       //   foreignKey: 'userId'
       // });
       // this.hasMany(models.Like, {
-      //   as: 'Like',
+      //   as: 'Likes',
       //   foreignKey: 'userId'
       // });
     }
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.init({
     userId: {
-      type: DataTypes.SMALLINT,
+      type: DataTypes.SMALLINT.UNSIGNED,
       autoIncrement: true,
       primaryKey: true
     },
@@ -50,11 +50,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: env.ROOT + env.PROF_DIR + 'default_mypage.png'
     },
+    provider: {
+      type: DataTypes.STRING(40),
+      defaultValue: 'local'
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'User',
+    modelName: 'Users',
   });
   
   return User;

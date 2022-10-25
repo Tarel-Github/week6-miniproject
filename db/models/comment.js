@@ -17,22 +17,22 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.SMALLINT
+      type: DataTypes.SMALLINT.UNSIGNED
     },
     postId: {
       allowNull: false,
-      type: DataTypes.SMALLINT,
+      type: DataTypes.SMALLINT.UNSIGNED,
       references: {
-        model: "Post",
+        model: "Posts",
         key: "postId",
       },
       onDelete: "cascade",
     },
     userId: {
       allowNull: false,
-      type: DataTypes.SMALLINT,
+      type: DataTypes.SMALLINT.UNSIGNED,
       references: {
-        model: "User",
+        model: "Users",
         key: "userId",
       },
       onDelete: "cascade",
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Comment',
+    modelName: 'Comments',
   });
   return Comment;
 };

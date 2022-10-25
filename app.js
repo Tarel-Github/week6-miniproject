@@ -1,9 +1,15 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
-const fileupload = require('express-fileupload');
 const path = require('path');
+const env = require('./config.env');
+const session = require('express-session');
+const fileupload = require('express-fileupload');
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
+const passportConfig = require('./passport');
 
+const { corsHeader } = require('./middlewares/setCorsHeader');
 const indexRouter = require('./index');
+const { errorHandler, errorLogger } = require('./middlewares/errorHandler');
 
 
 class App {
@@ -12,6 +18,7 @@ class App {
         this.app = express();
         this.middleware();
         this.router();
+        this.errorHandler();
     }
 
     middleware() {
@@ -25,10 +32,31 @@ class App {
             },
             abortOnLimit: true,
         }));
+
+        passportConfig();
+        // passport authorize 사용할 시 resave: true, cookie.secure: false
+        this.app.use(session({
+            resave: false,
+            saveUninitialized: false,
+            secret: env.SESSION_KEY,
+            cookie: { 
+                secure: true,
+                // maxAge: Date.now() + 60*60*24
+            },
+        }));
+        this.app.use(passport.initialize());
+        this.app.use(passport.session());
     }
 
     router() {
+        this.app.disable('x-powered-by');
+        this.app.use(corsHeader);
         this.app.use('/', indexRouter);
+    }
+
+    errorHandler() {
+        this.app.use(errorLogger);
+        this.app.use(errorHandler);
     }
 }
 

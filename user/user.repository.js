@@ -1,48 +1,36 @@
-const { User } = require('../db/models');
+const { Users } = require('../db/models');
 const { Op } = require('sequelize');
 
 
-class UserRepository extends User {
+class UserRepository extends Users {
     constructor() {
         super();
     }
 
     signup = async function(user) {
-        return User.create(user);
+        return Users.create(user);
     }
 
     findAll = async function() {
-        return User.findAll();
+        return Users.findAll();
     }
 
-    findusername = async function(username) {
-        return await User.findOne({
-            where: { username }
-        });
-    }
-
-    findNickname = async function(nickname) {
-        return await User.findOne({
-            where: { nickname }
-        });
-    }
-
-    dupCheck = async function(value) {
-        return await User.findOne({
+    findOne = async function(value) {
+        return await Users.findOne({
             where: {
-                [Op.or]: [{username: value}, {nickname: value}]
+                [Op.or]: [{userId: value}, {username: value}, {nickname: value}]
             }
         });
     }
 
     updateNickname = async function({ userId, nickname }) {
-        return await User.update({ nickname }, {
+        return await Users.update({ nickname }, {
             where: { userId }
         });
     }    
 
     updateProfImg = async function(userId, [profComment, profMypage]) {
-        return await User.update({ profComment, profMypage }, {
+        return await Users.update({ profComment, profMypage }, {
             where: { userId }
         });
     }

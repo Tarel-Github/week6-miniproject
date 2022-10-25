@@ -7,7 +7,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {
       userId: {
-        type: Sequelize.SMALLINT,
+        type: Sequelize.SMALLINT.UNSIGNED,
         autoIncrement: true,
         primaryKey: true
       },
@@ -32,6 +32,10 @@ module.exports = {
       profMypage: {
         type: Sequelize.STRING,
         defaultValue: env.ROOT + env.PROF_DIR + 'default_mypage.png'
+      },
+      provider: {
+        type: Sequelize.STRING(40),
+        defaultValue: 'local'
       },
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE
