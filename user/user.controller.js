@@ -8,16 +8,20 @@ const { InvalidParamsError } = require('../util/exception');
 
 class UserController {
     signup = async function(req, res, next) {
-        const { username, password, confirm, nickname } = req.body;
-        if (password !== confirm) {
-            next(new InvalidParamsError('비밀번호가 일치하지 않습니다.'));
+        try {
+            const { username, password, confirm, nickname } = req.body;
+            if (password !== confirm)
+                throw new InvalidParamsError('비밀번호가 일치하지 않습니다.');
+    
+            await User.signup({ username, password, nickname });
+    
+            res.status(200).json({
+                message: "SUCCESS"
+            });
+            
+        } catch (error) {
+            next(error);
         }
-
-        await User.signup({ username, password, nickname });
-
-        res.status(200).json({
-            message: "SUCCESS"
-        });
     }
 
     dupCheck = async function(req, res, next) {
@@ -42,21 +46,26 @@ class UserController {
     }
 
     profileUpdate = async function(req, res, next) {
-        if (!req.files) throw new InvalidParamsError('이미지를 업로드해 주세요.');
-        const { profImg } = req.files;
-        // const { userId } = req.app.locals.user;
-        const userId = 1;
-
-        if (profImg.mimetype.split('/')[0] !== 'image')
-            throw new InvalidParamsError('이미지를 업로드해 주세요.');
-
-        const imgPath = await ResizeAndSave.profImg(userId, profImg);
-        const profImgPath = await User.profileUpdate(userId, imgPath);
-        console.log(imgPath);
-
-        res.status(200).json({
-            message: 'SUCCESS',
-        });
+        try {
+            if (!req.files) throw new InvalidParamsError('이미지를 업로드해 주세요.');
+            const { profImg } = req.files;
+            // const { userId } = req.app.locals.user;
+            const userId = 1;
+    
+            if (profImg.mimetype.split('/')[0] !== 'image')
+                throw new InvalidParamsError('이미지를 업로드해 주세요.');
+    
+            const imgPath = await ResizeAndSave.profImg(userId, profImg);
+            const profImgPath = await User.profileUpdate(userId, imgPath);
+            console.log(imgPath);
+    
+            res.status(200).json({
+                message: 'SUCCESS',
+            });
+            
+        } catch (error) {
+            next(error);
+        }
     }
 
     deleteUser = async function() {};
