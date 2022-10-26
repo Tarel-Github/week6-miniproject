@@ -4,7 +4,7 @@ const Joi = require('joi');
 module.exports = {
     signupSchema: Joi.object({
         username: Joi.string().pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9_]{2,10}$/).required(),
-        nickname: Joi.string().max(8).alphanum().required(),
+        nickname: Joi.string().max(8).required(),
         password: Joi.string().pattern(/^(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{4,20}$/).required(),
         confirm: Joi.string().pattern(/^(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{4,20}$/).required()
     }),

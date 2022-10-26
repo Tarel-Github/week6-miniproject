@@ -27,9 +27,9 @@ class PostsController {
 
     uploadPost = async(req,res,next)=>{
         try{
-            const { userId } = res.locals.user;
-            const { name, title, contents } = req.body;
-            const uploadPostData = await this.postService.uploadPost(userId, name, title, contents);
+            const { userId } = req.app.locals.user;
+            const { categoryId, title, contents } = req.body;
+            const uploadPostData = await this.postService.uploadPost(userId, categoryId, title, contents);
             res.status(201).json({data : uploadPostData, msg : "게시글이 작성되었습니다"});
         }catch(error){
             console.log(error)
@@ -40,8 +40,8 @@ class PostsController {
     updatePost = async(req,res,next)=>{
         try{
             const { postId } = req.params;
-            const { userId } = res.locals.user;
-            const {categoryId, title, contents} = req.body;
+            const { userId } = req.app.locals.user;
+            const { categoryId, title, contents} = req.body;
             const updatePostData = await this.postService.updatePost(postId, userId, categoryId, title, contents)
             res.status(201).json({data : updatePostData});
         }catch(error){
@@ -52,8 +52,8 @@ class PostsController {
 
     deletePost = async(req,res,next)=>{
         try{
-            const {postId} = req.params;
-            const { userId } = res.locals.user;
+            const { postId } = req.params;
+            const { userId } = req.app.locals.user;
             const deletePostData = await this.postService.deletePost(postId, userId)
             res.status(200).json({data : deletePostData, msg : "게시글이 삭제되었습니다"})
         }catch(error){

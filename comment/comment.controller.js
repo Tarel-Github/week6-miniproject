@@ -25,7 +25,7 @@ class CommentsController {
 
             //#########################
             //const userId = 1 //로그인 기능 구현시 수정 필요
-            const user=res.locals.user;                     //로그인중인 유저의 정보를 가져온다.
+            const user=req.app.locals.user;                     //로그인중인 유저의 정보를 가져온다.
             const userId = user.userId                       //로그인 유저의 아이디를 가져옴
             //#########################
 
@@ -45,7 +45,7 @@ class CommentsController {
         const { content }= req.body;        //수정 내용을 가져오기
 
         try{
-        const user=res.locals.user;                     //로그인중인 유저의 정보를 가져온다.
+        const user=req.app.locals.user;                     //로그인중인 유저의 정보를 가져온다.
         const userId = user.userId                       //로그인 유저의 아이디를 가져옴
 
 
@@ -68,7 +68,7 @@ class CommentsController {
 
         //#########################
         //const userId = 1 //로그인 기능 구현시 수정 필요
-        const user=res.locals.user;                     //로그인중인 유저의 정보를 가져온다.
+        const user=req.app.locals.user;                     //로그인중인 유저의 정보를 가져온다.
         const userId = user.userId                       //로그인 유저의 아이디를 가져옴
         //#########################
 
