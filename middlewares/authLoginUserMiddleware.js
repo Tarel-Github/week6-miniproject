@@ -3,14 +3,9 @@ require('dotenv').config();
 // 로그인 되어 있는 유저일 경우 Error를 반환한다.
 module.exports = (req, res, next) => {
   try {
-    const cookies = req.cookies[process.env.COOKIE_NAME];
-
-    if (cookies) {
-      return res.status(403).send({
-        errorMessage: '이미 로그인이 되어있습니다.',
-      });
+    if(req.headers.authorization){      //테스트 할 때 Auth의 Bearer부분이 공백이어야지 로그인이 된다.
+        return res.status(403).send({errorMessage: '이미 로그인이 되어있습니다.',});
     }
-
     next();
   } catch (error) {
     console.trace(error);

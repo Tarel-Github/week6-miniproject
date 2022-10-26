@@ -6,6 +6,7 @@ class LikesController{
     getPostLike = async (req, res, next) => {
         try {
             const { userId } = res.locals.user;                             //로그인한 유저의 userId를 가져오고
+
             const Likes = await this.likeService.getPostLike(userId, );     //그 데이터를 서비스에 보내고 받아온 정보를
             res.status(200).json({ data: Likes });                          //리스폰 상태에 넣는다.
         } catch (error) {
@@ -17,7 +18,8 @@ class LikesController{
     updatePostLike = async (req, res, next) => {
         try {
             const { postId } = req.params;                      //postId를 파람스로부터 가져옴
-            const { userId } = res.locals.user;                 //로그인한 유저의 userId를 가져옴
+            const { userId } = res.locals.user;                             //로그인한 유저의 userId를 가져오고
+        
             const Likes = await this.likeService.updatePostLike(userId, postId);    //위의 두개를 서비스로 보내고 받아온 값을
             res.status(200).json({ data: Likes });              //리스폰 상태창에 보낸다.
         } catch (error) {
