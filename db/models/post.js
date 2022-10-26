@@ -59,8 +59,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT('tiny')
     },
     likes:{
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
+      type: DataTypes.INTEGER.UNSIGNED,
+      defaultValue: 0
     },
     createdAt: {
       type: DataTypes.DATE

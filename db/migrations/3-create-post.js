@@ -1,7 +1,5 @@
 'use strict';
 
-const { HasMany } = require('sequelize');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -36,8 +34,8 @@ module.exports = {
         type: Sequelize.TEXT('tiny')
       },
       likes:{
-        type: Sequelize.BOOLEAN,
-      defaultValue: false
+        type: Sequelize.INTEGER.UNSIGNED,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,

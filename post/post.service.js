@@ -22,12 +22,12 @@ class PostService {
         }
     }
 
-    uploadPost = async(userId, name, title, contents)=>{
+    uploadPost = async(userId, categoryId, title, contents)=>{
         try{
             // 여기서 category name을 categoryId로 바꾸는 로직을 추가
-            const category = await this.postRepository.getCategoryByName(name); //{categoryId, name}
+            // const category = await this.postRepository.getCategoryByName(name); //{categoryId, name}
             // console.log(category)
-            const uploadPostData = await this.postRepository.uploadPost(userId, category.categoryId, title, contents)
+            const uploadPostData = await this.postRepository.uploadPost(userId, categoryId, title, contents)
             // console.log(uploadPostData)
             if(!title || !contents) throw new Error ("게시글 내용을 작성해주세요")
             // 로직 수행 후 사용자에게 보여 줄 데이터 가공
@@ -43,7 +43,7 @@ class PostService {
             }  
         }catch(error){
             console.log(error)
-            res.status(400).send({msg:"에러가 났습니다"})
+            return error;
         }
         
     }

@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
     // const user = await User.findOne({where:{userId:id}})//###################
     const userId = jwt.verify(authToken, env.JWT_KEY);
     const user = await User.findOne(userId.userId)
-    res.locals.user = user;
+    req.app.locals.user = user;
     next();
   } catch (error) {
     res.status(401).send({

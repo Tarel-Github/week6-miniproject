@@ -125,7 +125,7 @@ class UserController {
             const accessToken = authorization.split(' ')[1];
             const { userId } = jwt.verify(accessToken);
             const user = await User.findOne(userId);
-            es.sendFile(user.profMypage);
+            res.sendFile(user.profMypage);
         } catch (error) {
             next(error);
         }
@@ -164,7 +164,7 @@ class UserController {
             res.cookie('refreshToken', `Bearer ${refreshToken}`);
             res.status(200).json({
                 message: '로그인되었습니다.',
-                Authorization: `Bearer ${accessToken}`,
+                accessToken: `Bearer ${accessToken}`,
                 refreshToken: `Bearer ${refreshToken}`
             });
 
