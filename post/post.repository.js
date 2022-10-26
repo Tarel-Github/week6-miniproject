@@ -1,4 +1,4 @@
-const { Posts } = require('../db/models');
+const { Posts, Categories } = require('../db/models');
 
 class PostRepository {
     findPostById = async (postId) => {
@@ -7,20 +7,27 @@ class PostRepository {
 
     findAllPost = async()=>{
         return await Posts.findAll({
-            attributes: { exclude: ['contents'] }, order: [['createdAt', 'DESC']]
+            order: [['createdAt', 'DESC']]
         })
     }
 
     uploadPost = async(userId, categoryId, title, contents)=>{
-        return await Posts.create({categoryId, userId, title, contents})
+        return await Posts.create({userId, categoryId, title, contents})
     }
 
-    updatePost = async(userId, categoryId, postId, title, contents)=>{
-        return await Posts.update({title, contents},{where:{postId, userId, categoryId, }})
+    updatePost = async(postId, userId, categoryId, title, contents)=>{
+        await Posts.update({categoryId, title, contents},{where:{postId, userId}})
     }
 
-    deletePost = async(postId)=>{
-        return await Posts.destroy({where:{postId}})
+    deletePost = async(postId, userId)=>{
+        return await Posts.destroy({where:{postId, userId}})
+    }
+
+    getCategoryByName = async(name) => {
+        console.log(name)
+        return await Categories.findOne({
+            where: { name }
+          })
     }
 }
 

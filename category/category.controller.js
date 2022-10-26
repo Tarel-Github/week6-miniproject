@@ -4,12 +4,14 @@ class CategoryController {
     categoryService = new CategoryService();
 
     getCategoryPosts = async(req,res,next)=>{
-        // feild 도 body?
-        const {categoryId} = req.params;
-        const name = "자기관리"
-        // const {name} = res.body;
-        const CategoryPost = await this.categoryService.getCategoryPost(categoryId, name)
-        res.status(200).json({data: CategoryPost})
+        try{
+            const {categoryId} = req.params;
+            const CategoryPost = await this.categoryService.getCategoryPost(categoryId)
+            res.status(200).json({data: CategoryPost})
+        }catch(error){
+            console.log(error)
+            res.status(400).send({errorMessage: "카테고리 조회에 실패하였습니다"})
+        }
     }
 }
 

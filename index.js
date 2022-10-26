@@ -9,7 +9,7 @@ const userRouter = require('./user/user.route');
 
 
 router.use('/comments', commentRouter);
-router.use('/posts/', categoryRouter);
+router.use('/posts/cate', categoryRouter);
 router.use('/posts/', postsRouter);
 router.use('/', userRouter);
 

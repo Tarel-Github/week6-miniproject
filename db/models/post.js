@@ -11,10 +11,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.Users,{
+        targetKey:'userId',
         foreignKey: 'userId'
       });
       this.belongsTo(models.Categories,{
+        targetKey:  'categoryId',
         foreignKey: 'categoryId'
+      });
+      this.hasMany(models.Comments,{
+        sourceKey:  'postId',
+        foreignKey: 'postId'
+      });
+      this.belongsTo(models.Likes,{
+        targetKey:  'postId',
+        foreignKey: 'postId'
       });
     }
   }

@@ -1,15 +1,10 @@
-const {Post, Category} = require('../db/models')
+const {Posts} = require('../db/models')
 
 class CategoryRepository {
-    findCategoryPost = async(categoryId)=>{
-        const categoryPost = await Post.findAll({
-            where:{categoryId},
-            // include: [{
-            //     model: Post,
-            //     exclude: ['contents']
-            // }]
+    findCategoryPost = async(categoryId, name)=>{
+        const categoryPost = await Posts.findAll({
+            where:{categoryId}, order: [['createdAt', 'DESC']]
         })
-        console.log(categoryPost)
         return categoryPost
     }    
 }

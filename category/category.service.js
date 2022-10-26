@@ -1,10 +1,9 @@
-const { any } = require('joi');
 const CategoryRepository = require('./category.repository')
 
 class CategoryService {
     categoryRepository = new CategoryRepository();
 
-    getCategoryPost = async(categoryId)=>{
+    getCategoryPost = async(categoryId,name)=>{
         const categoryPost = await this.categoryRepository.findCategoryPost(categoryId)
         return categoryPost
     }
