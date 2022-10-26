@@ -1,6 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 const env = require('../../config.env');
+const path = require('path');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -44,11 +45,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     profComment: {
       type: DataTypes.STRING,
-      defaultValue: env.ROOT + env.PROF_DIR + 'default_comment.webp'
+      defaultValue: path.join(env.ROOT, env.PROF_DIR, 'default_comment.webp')
     },
     profMypage: {
       type: DataTypes.STRING,
-      defaultValue: env.ROOT + env.PROF_DIR + 'default_mypage.webp'
+      defaultValue: path.join(env.ROOT, env.PROF_DIR, 'default_mypage.webp')
     },
     provider: {
       type: DataTypes.STRING(40),
