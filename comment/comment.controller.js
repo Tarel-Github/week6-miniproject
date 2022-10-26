@@ -4,9 +4,13 @@ class CommentsController {
     commentService = new CommentService();
 
     getComments = async(req, res, next) => {
+        try{
         const {postId} = req.params;//포스트의 아이디를 가져와야 함
         const comments = await this.commentService.findComment(postId);//포스트서비스의 findAllPost를 사용
         res.status(200).json({data:comments});//컨트롤러는 요청과 응답에 관여하니 응답만
+        }catch(error){
+            return res.status(500).send({ errorMessage:error.message});
+        }
     }
 
     createComment= async(req, res, next) =>{
@@ -32,7 +36,7 @@ class CommentsController {
             res.status(201).send({data: createCommentData});  
        
         }catch(error){
-          return res.status(500).send({ errorMessage:error.message});
+            return res.status(500).send({ errorMessage:error.message});
         }
     };
 
@@ -40,11 +44,10 @@ class CommentsController {
         const {commentId} = req.params;     //수정하고자 하는 코멘트의 아이디를 가져옴
         const { content }= req.body;        //수정 내용을 가져오기
 
-        //#########################
-        //const userId = 1 //로그인 기능 구현시 수정 필요
+        try{
         const user=res.locals.user;                     //로그인중인 유저의 정보를 가져온다.
         const userId = user.userId                       //로그인 유저의 아이디를 가져옴
-        //#########################
+
 
         const updateComment = await this.commentService.updateComment(commentId,content,userId)
 
@@ -54,6 +57,9 @@ class CommentsController {
         }
 
         res.status(200).json({Message: "덧글 수정 성공"})
+        }catch (error){
+            return res.status(500).send({ errorMessage:error.message});
+        }
     };
 
     deleteComment = async (req, res, next) => {
