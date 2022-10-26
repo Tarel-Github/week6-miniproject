@@ -1,25 +1,27 @@
 const { Router } = require('express');
 const passport = require('passport');
 const User = require('./user.controller');
+const authMiddleware = require('../middlewares/authMiddleware');
+// const authLoginUserMiddleware = require('../middlewares/authLoginUserMiddleware');
 
 const router = Router();
 
 
 router.get('/users', User.findAll);
 
-router.get('/user/', User.findOne);
+router.get('/user/', authMiddleware, User.findOne);
 
-router.get('/user/profile', User.profMy);
+router.get('/user/profile', authMiddleware, User.profMy);
 
 router.post('/signup', User.signup);
 
 router.post('/dup', User.dupCheck);
 
-router.patch('/profile/nickname', User.nicknameUpdate);
+router.patch('/profile/nickname', authMiddleware, User.nicknameUpdate);
 
-router.patch('/profile/image', User.profileUpdate);
+router.patch('/profile/image', authMiddleware, User.profileUpdate);
 
-router.delete('/:userId', User.deleteUser);
+router.delete('/:userId', authMiddleware, User.deleteUser);
 
 
 router.post('/signin', passport.authenticate('local'), User.localSign);

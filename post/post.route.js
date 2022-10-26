@@ -1,5 +1,7 @@
 // URI와 미들웨어, HTTP메서드를 설정 / 컨트롤러와 연결하는 역할
 const express = require('express');
+const authMiddleware = require('../middlewares/authMiddleware');
+
 const router = express.Router();
 
 const PostsController = require('./post.controller');

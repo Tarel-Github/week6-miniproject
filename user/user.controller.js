@@ -27,25 +27,35 @@ class UserController {
     }
 
     dupCheck = async function(req, res, next) {
-        const { value } = req.body;
-        if (!value) throw new InvalidParamsError('입력값이 없습니다.');
-
-        const result = await User.dupCheck(value);
-
-        res.status(200).json({
-            result,
-        });
+        try {
+            const { value } = req.body;
+            if (!value) throw new InvalidParamsError('입력값이 없습니다.');
+    
+            const result = await User.dupCheck(value);
+    
+            res.status(200).json({
+                result,
+            });
+            
+        } catch (error) {
+            next(error)
+        }
     }
 
     nicknameUpdate = async function(req, res, next) {
-        const { nickname } = req.body;
-        const { userId } = req.app.locals.user;
-        
-        await User.nicknameUpdate({ userId, nickname });
-
-        res.status(200).json({
-            message: 'SUCCESS'
-        });
+        try {
+            const { nickname } = req.body;
+            const { userId } = req.app.locals.user;
+            
+            await User.nicknameUpdate({ userId, nickname });
+    
+            res.status(200).json({
+                message: 'SUCCESS'
+            });
+            
+        } catch (error) {
+            next(error);
+        }
     }
 
     profileUpdate = async function(req, res, next) {
@@ -74,12 +84,17 @@ class UserController {
     deleteUser = async function() {};
 
     findAll = async function(req, res, next) {
-        const userList = await User.findAll();
-
-        res.status(200).json({
-            data: userList,
-            session: req.session
-        });
+        try {
+            const userList = await User.findAll();
+    
+            res.status(200).json({
+                data: userList,
+                session: req.session
+            });
+            
+        } catch (error) {
+            next(error);
+        }
     };
 
     findOne = async function(req, res, next) {
