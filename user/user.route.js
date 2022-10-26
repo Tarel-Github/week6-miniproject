@@ -5,17 +5,13 @@ const User = require('./user.controller');
 const router = Router();
 
 
-router.get('/user', User.findAll);
+router.get('/users', User.findAll);
 
-router.get('/user/:userId', User.findOne)
+router.get('/user/', User.findOne);
+
+router.get('/user/profile', User.profMy);
 
 router.post('/signup', User.signup);
-
-router.post('/signin', passport.authenticate('local'), User.localSign);
-
-router.get('/auth/kakao', passport.authenticate('kakao'));
-
-router.get('/callback', User.kakaoSign);
 
 router.post('/dup', User.dupCheck);
 
@@ -26,12 +22,13 @@ router.patch('/profile/image', User.profileUpdate);
 router.delete('/:userId', User.deleteUser);
 
 
-/**
- * refreshToken 정보를 저장하는 서버 DB를 날려버립니다.
- * 절대주의!!
- */
-// router.get('/reloadCache', User.reloadCache);
+router.post('/signin', passport.authenticate('local'), User.localSign);
 
+router.get('/auth/kakao', passport.authenticate('kakao'));
+
+router.get('/auth/kakao/callback', User.kakaoSign);
+
+router.get('/signout', User.signout);
 
 
 

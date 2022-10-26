@@ -1,6 +1,6 @@
 const passport = require('passport');
 const KakaoStrategy = require('passport-kakao').Strategy;
-const { User } = require('../db/models');
+const User = require('../user/user.repository');
 const env = require('../config.env');
 
 module.exports = function() {
@@ -15,15 +15,7 @@ module.exports = function() {
             console.log('profile: ', profile);
 
             try {
-                const user = await User.findOne({
-                    where: { 
-                        username: profile.username,
-                        provider: 'kakao'
-                    },
-                    attributes: {
-                        exclude: ['password']
-                    }
-                });
+                const user = await User.findKakaoUser(profile.username);
     
                 if (user) {
                     console.log('KAKAO LOGIN: ', user);
@@ -31,10 +23,10 @@ module.exports = function() {
                         userId: user.get().userId,
                         username: user.get().username,
                         nickname: user.get().nickname
-                    }
+                    };
                     return done(null, payload);
                 } else {
-                    const newUser = await User.create({
+                    const newUser = await User.signup({
                         username: profile.username,
                         password: 'kakao',
                         nickname: profile.displayName,
@@ -45,8 +37,8 @@ module.exports = function() {
                         userId: newUser.get().userId,
                         username: newUser.get().username,
                         nickname: newUser.get().nickname
-                    }
-                    return done(null, payload)
+                    };
+                    return done(null, payload);
                 }
 
             } catch (error) {

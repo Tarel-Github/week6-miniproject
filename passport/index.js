@@ -2,7 +2,7 @@ const passport = require('passport');
 const local = require('./stratLocal');
 const kakao = require('./stratKakao');
 
-const { User } = require('../db/models');
+const User = require('../user/user.repository');
 
 module.exports = function() {
     passport.serializeUser((user, done)=>{
@@ -12,9 +12,9 @@ module.exports = function() {
 
     passport.deserializeUser(async(user, done)=>{
         console.log('DESERIALIZE USER: ', user);
-        const result = await User.findByPk(user.userId)
+        const result = await User.findOne(user.userId);
 
-        if (!result) return done(new Error('no user found'))
+        if (!result) return done(new Error('no user found'));
 
         return done(null, result);
     });

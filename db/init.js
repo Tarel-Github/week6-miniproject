@@ -10,7 +10,9 @@ async function initialize() {
     await cache.dropMemory();
     await cache.createMemory();
     await sequelize.query(query);
+
     console.log("REFRESH & CATEGORY INITIALIZED");
+    sequelize.close();
 }
 
 (async()=>{

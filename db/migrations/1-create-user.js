@@ -27,11 +27,11 @@ module.exports = {
       },
       profComment: {
         type: Sequelize.STRING,
-        defaultValue: env.ROOT + env.PROF_DIR + 'default_comment.png'
+        defaultValue: env.ROOT + env.PROF_DIR + 'default_comment.webp'
       },
       profMypage: {
         type: Sequelize.STRING,
-        defaultValue: env.ROOT + env.PROF_DIR + 'default_mypage.png'
+        defaultValue: env.ROOT + env.PROF_DIR + 'default_mypage.webp'
       },
       provider: {
         type: Sequelize.STRING(40),

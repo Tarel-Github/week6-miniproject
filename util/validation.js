@@ -3,18 +3,14 @@ const Joi = require('joi');
 
 module.exports = {
     signupSchema: Joi.object({
-        nickname: Joi.string().min(3).alphanum().required()
-            .error(new Error("닉네임은 최소 3자 이상, 알파벡 대소문자(a~z, A~Z), 숫자(0~9)로 구성되어야 합니다.")),
-        password: Joi.string().min(4).required()
-            .error(new Error("비밀번호는 최소 4자 이상이어야 합니다.")),
-        confirm: Joi.string().min(4).required()
-            .error(new Error("비밀번호는 최소 4자 이상이어야 합니다.")),
+        username: Joi.string().pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9_]{2,10}$/).required(),
+        nickname: Joi.string().max(8).alphanum().required(),
+        password: Joi.string().pattern(/^(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{4,20}$/).required(),
+        confirm: Joi.string().pattern(/^(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{4,20}$/).required()
     }),
     signinSchema: Joi.object({
-        nickname: Joi.string().min(3).alphanum().required()
-            .error(new Error("닉네임이 올바르지 않습니다.")),
-        password: Joi.string().min(4).required()
-            .error(new Error("비밀번호가 올바르지 않습니다.")),
+        username: Joi.string().pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9_]{2,10}$/).required(),
+        password: Joi.string().pattern(/^(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{4,20}$/).required()
     }),
 
     postSchema: Joi.object({
