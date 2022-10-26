@@ -16,14 +16,14 @@ class CommentService{
     }
 
     //덧글 달기
-    createComment = async (content, userId, postId) => {
-        const createComment = await this.commentRepository.createComment(content, userId, postId);
+    createComment = async (comment, userId, postId) => {
+        const createComment = await this.commentRepository.createComment(comment, userId, postId);
         return createComment
     }
 
     //덧글 수정하기
-    updateComment= async (commentId, content, userId) => {
-        const createComment = await this.commentRepository.updateComment(commentId, content, userId);
+    updateComment= async (commentId, comment, userId) => {
+        const createComment = await this.commentRepository.updateComment(commentId, comment, userId);
         return createComment
     }
 

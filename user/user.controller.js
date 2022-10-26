@@ -1,3 +1,4 @@
+const fs = require('fs');
 const passport = require('passport');
 const User = require('./user.service');
 const { addUserToken, removeUserToken } = require('../db/cache');
@@ -62,15 +63,13 @@ class UserController {
         try {
             if (!req.files) throw new InvalidParamsError('이미지를 업로드해 주세요.');
             const { profImg } = req.files;
-            // const { userId } = req.app.locals.user;
-            const userId = 1;
+            const { userId } = req.app.locals.user;
     
             if (profImg.mimetype.split('/')[0] !== 'image')
                 throw new InvalidParamsError('이미지를 업로드해 주세요.');
     
             const imgPath = await ResizeAndSave.profImg(userId, profImg);
-            const profImgPath = await User.profileUpdate(userId, imgPath);
-            console.log(imgPath);
+            await User.profileUpdate(userId, imgPath);
     
             res.status(200).json({
                 message: 'SUCCESS',
@@ -131,24 +130,23 @@ class UserController {
         }
     }
 
+    profImage = async function(req, res, next) {
+        try {
+            const { userId } = req.app.locals.user;
+            const user = await User.findOne(userId);
 
+            fs.readFile(user.profMypage, (err, data)=>{
+                if (err) throw err;
+                const base64String = btoa(
+                    String.fromCharCode(...new Uint8Array(data))
+                  );
 
-    // signin = async function(req, res, next) {
-    //     const { username, password } = req.body;        
-
-    //     const payload = await User.signin({ username, password });
-    //     const accessToken = jwt.sign(payload);
-    //     const refreshToken = jwt.refresh();
-    //     await cache.addUserToken(refreshToken, payload.userId);
-
-    //     res.set({
-    //         Authorization: `Bearer ${accessToken}`,
-    //         refreshToken
-    //     });
-    //     res.status(200).json({
-    //         message: '로그인되었습니다.'
-    //     });
-    // }
+                res.json({ data: base64String })
+            })
+        } catch (error) {
+            next(error);
+        }
+    }
 
     localSign = async function(req, res, next) {
         console.log('req.user: ', req.user);
@@ -205,6 +203,23 @@ class UserController {
             message: 'SUCCESS'
         });
     }
+
+        // signin = async function(req, res, next) {
+    //     const { username, password } = req.body;        
+
+    //     const payload = await User.signin({ username, password });
+    //     const accessToken = jwt.sign(payload);
+    //     const refreshToken = jwt.refresh();
+    //     await cache.addUserToken(refreshToken, payload.userId);
+
+    //     res.set({
+    //         Authorization: `Bearer ${accessToken}`,
+    //         refreshToken
+    //     });
+    //     res.status(200).json({
+    //         message: '로그인되었습니다.'
+    //     });
+    // }
 }
 
 

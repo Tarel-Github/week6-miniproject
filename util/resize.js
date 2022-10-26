@@ -9,11 +9,11 @@ class ResizeAndSave {
     
         const comment = { width: 100, height: 100 };
         const mypage = { width: 300, height: 300 };
-        const comPath = `${dirPath}${userId}_comment.webp`;
-        const myPath = `${dirPath}${userId}_mypage.webp`;
+        const comPath = `${dirPath}${userId}_comment.png`;
+        const myPath = `${dirPath}${userId}_mypage.png`;
     
         const saveCom = sharp(buffer)
-            .toFormat('webp')
+            .toFormat('png')
             .resize({
                 width: comment.width,
                 height: comment.width,
@@ -21,7 +21,7 @@ class ResizeAndSave {
             })
             .toFile(comPath);
         const saveMyp = sharp(buffer)
-            .toFormat('webp')
+            .toFormat('png')
             .resize({
                 width: mypage.width,
                 height: mypage.height,
@@ -39,11 +39,11 @@ class ResizeAndSave {
 
         const list = { width: 300, height: 200 };
         const detail = { width: 600, height: 600 };
-        const listPath = `${dirPath}${postId}_list.webp`;
-        const detailPath = `${dirPath}${postId}_detail.webp`;
+        const listPath = `${dirPath}${postId}_list.png`;
+        const detailPath = `${dirPath}${postId}_detail.png`;
 
         const saveList = sharp(buffer)
-            .toFormat('webp')
+            .toFormat('png')
             .resize({
                 width: list.width,
                 height: list.height,
@@ -51,7 +51,7 @@ class ResizeAndSave {
             })
             toFile(listPath);
         const saveDetail = sharp(buffer)
-            .toFormat('webp')
+            .toFormat('png')
             .resize({
                 width: detail.width,
                 height: detail.height,

@@ -6,7 +6,7 @@ class Jwt {
     sign = function(payload) {
         return jwt.sign(payload, env.JWT_KEY, {
             algorithm: 'HS256',
-            expiresIn: 60*60
+            expiresIn: 60*60*6
         });
     }
     verify = function(token) {

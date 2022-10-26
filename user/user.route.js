@@ -11,7 +11,7 @@ router.get('/users', User.findAll);
 
 router.get('/user/', authMiddleware, User.findOne);
 
-router.get('/user/profile', authMiddleware, User.profMy);
+router.get('/user/profile', authMiddleware, User.profImage);
 
 router.post('/signup', User.signup);
 

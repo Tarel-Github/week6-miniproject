@@ -5,7 +5,7 @@ class SetHeader {
         const origin = req.headers?.origin;
 
         res.set({
-            'Access-Control-Allow-Headers': 'X-Requested-With',
+            'Access-Control-Allow-Headers': '*',
             'Access-Control-Allow-Methods': '*',
             'Access-Control-Allow-Origin': origin || ['http://localhost:3000']
         });

@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: "cascade",
     },
-    content: {
+    comment: {
       type: DataTypes.STRING(40)
     },
     createdAt: {

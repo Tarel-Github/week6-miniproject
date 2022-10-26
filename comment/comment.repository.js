@@ -19,19 +19,19 @@ class CommentRepository {
     };
 
     //덧글 추가
-    createComment = async (content, userId, postId) => {
-        const createCommentData = await Comments.create({content, userId, postId});
+    createComment = async (comment, userId, postId) => {
+        const createCommentData = await Comments.create({comment, userId, postId});
         return createCommentData;
     }
 
     //덧글 수정
-    updateComment = async (commentId, content, userId) => {
+    updateComment = async (commentId, comment, userId) => {
         const commentAu = await Comments.findByPk(commentId); 
         const commentAuId = commentAu.userId  
         if(userId !== commentAuId){    
             return;
         }
-        const updateCommentData = await Comments.update({content}, {where: {commentId}})
+        const updateCommentData = await Comments.update({comment}, {where: {commentId}})
         return updateCommentData
     }
 

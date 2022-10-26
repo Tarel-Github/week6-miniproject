@@ -23,7 +23,7 @@ module.exports = {
         allowNull: false,
         onDelete: "cascade",
       },
-      content: {
+      comment: {
         type: Sequelize.DataTypes.STRING(40),
       },
       createdAt: {

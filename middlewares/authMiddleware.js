@@ -1,5 +1,5 @@
 //로그인 확인 미들웨어
-const jwt = require("jsonwebtoken");
+const jwt = require("../util/jwt");
 // const { User } = require("../db/models"); 
 const User = require("../user/user.repository")
 const env = require('../config.env')
@@ -17,9 +17,8 @@ module.exports = async (req, res, next) => {
   try {
     // const { userId } = jwt.verify(authToken, env.JWT_KEY); //################
     // const user = await User.findOne({where:{userId:id}})//###################
-    const userId = jwt.verify(authToken, env.JWT_KEY);
-    const user = await User.findOne(userId.userId)
-    req.app.locals.user = user;
+    const payload = jwt.verify(authToken);
+    req.app.locals.user = payload;
     next();
   } catch (error) {
     res.status(401).send({
