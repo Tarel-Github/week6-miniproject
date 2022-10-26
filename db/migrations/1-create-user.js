@@ -2,6 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 
 const env = require('../../config.env');
+const path = require('path')
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -27,11 +28,11 @@ module.exports = {
       },
       profComment: {
         type: Sequelize.STRING,
-        defaultValue: env.ROOT + env.PROF_DIR + 'default_comment.webp'
+        defaultValue: path.join(env.ROOT, env.PROF_DIR, 'default_comment.webp')
       },
       profMypage: {
         type: Sequelize.STRING,
-        defaultValue: env.ROOT + env.PROF_DIR + 'default_mypage.webp'
+        defaultValue: path.join(env.ROOT, env.PROF_DIR, 'default_mypage.webp')
       },
       provider: {
         type: Sequelize.STRING(40),
