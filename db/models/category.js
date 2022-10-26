@@ -25,12 +25,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING(20)
-    },
-    createdAt: {
-      type: DataTypes.DATE
-    }, 
-    updatedAt: {
-      type: DataTypes.DATE
     }
   }, {
     sequelize,
