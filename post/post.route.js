@@ -3,12 +3,13 @@ const express = require('express');
 const router = express.Router();
 
 const PostsController = require('./post.controller');
+const authMiddleware = require('../middlewares/authMiddleware')
 const postsController = new PostsController(); // 가져온 모듈에 대한 클래스를 선언하는 부분이다
 
 router.get('/', postsController.getPosts);
 router.get('/:postId', postsController.getPostById);
-router.post('/', postsController.uploadPost);
-router.put('/:postId', postsController.updatePost);
-router.delete('/:postId', postsController.deletePost);
+router.post('/', authMiddleware, postsController.uploadPost);
+router.put('/:postId', authMiddleware, postsController.updatePost);
+router.delete('/:postId', authMiddleware, postsController.deletePost);
 
 module.exports = router;

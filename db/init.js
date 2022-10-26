@@ -4,7 +4,7 @@ const cache = require('./cache')
 async function initialize() {
     const query = `
     INSERT INTO Categories (name)
-    values ('category1'),('category2'),('category3'),('category4'),('category5');
+    values ('자기관리'),('식습관'),('마음챙김'),('취미'),('기타');
     `
 
     await cache.dropMemory();
