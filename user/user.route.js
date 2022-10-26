@@ -5,9 +5,11 @@ const User = require('./user.controller');
 const router = Router();
 
 
-router.get('/user', User.findAll);
+router.get('/users', User.findAll);
 
-router.get('/user/:userId', User.findOne)
+router.get('/user/', User.findOne);
+
+router.get('/user/profile', User.profMy);
 
 router.post('/signup', User.signup);
 

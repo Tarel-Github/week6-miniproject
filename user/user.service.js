@@ -15,7 +15,7 @@ class UserService {
     signin = async function({ username, password }) {
         const user = await User.findOne(username);
         if (user === null || !(await bcrypt.compare(password, user.get().password))) {
-            throw new Error('아이디, 비밀번호가 일치하지 않습니다.');
+            return new Error('아이디, 비밀번호가 일치하지 않습니다.');
         }
 
         return {

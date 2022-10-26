@@ -3,20 +3,22 @@ const User = require('./user.service');
 const { addUserToken, removeUserToken } = require('../db/cache');
 const jwt = require('../util/jwt');
 const ResizeAndSave = require('../util/resize');
+const { signupSchema, signinSchema } = require('../util/validation');
 const { InvalidParamsError } = require('../util/exception');
 
 
 class UserController {
     signup = async function(req, res, next) {
         try {
-            const { username, password, confirm, nickname } = req.body;
+            const { username, password, confirm, nickname }
+                = await signupSchema.validateAsync(req.body);
             if (password !== confirm)
                 throw new InvalidParamsError('비밀번호가 일치하지 않습니다.');
     
             await User.signup({ username, password, nickname });
     
             res.status(200).json({
-                message: "SUCCESS"
+                message: 'SUCCESS'
             });
             
         } catch (error) {
@@ -26,6 +28,7 @@ class UserController {
 
     dupCheck = async function(req, res, next) {
         const { value } = req.body;
+        if (!value) throw new InvalidParamsError('입력값이 없습니다.');
 
         const result = await User.dupCheck(value);
 
@@ -80,13 +83,40 @@ class UserController {
     };
 
     findOne = async function(req, res, next) {
-        const { userId } = req.params;
-        const user = await User.findOne(userId);
-
-        res.status(200).json({
-            data: user
-        });
+        try {
+            const { authorization, refreshtoken } = req.headers;
+            if (!authorization || !refreshtoken) {
+                    throw new Error('INVALID HEADER');
+            }
+            const accessToken = authorization.split(' ')[1];
+            const { userId } = jwt.verify(accessToken);
+            const user = await User.findOne(userId);
+    
+            res.status(200).json({
+                data: user
+            })
+            
+        } catch (error) {
+            next(error);
+        }
     }
+
+    profMy = async function(req, res, next) {
+        try {
+            const { authorization, refreshtoken } = req.headers;
+            if (!authorization || !refreshtoken) {
+                    throw new Error('INVALID HEADER');
+            }
+            const accessToken = authorization.split(' ')[1];
+            const { userId } = jwt.verify(accessToken);
+            const user = await User.findOne(userId);
+            es.sendFile(user.profMypage);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+
 
     // signin = async function(req, res, next) {
     //     const { username, password } = req.body;        
@@ -109,18 +139,20 @@ class UserController {
         console.log('req.user: ', req.user);
         try {
             const payload = req.user;
+            if (payload instanceof Error) throw payload;
+
             const accessToken = jwt.sign(payload);
             const refreshToken = jwt.refresh();
             await addUserToken(refreshToken, payload.userId);
     
-            res.set({
+            res.cookie('Authorization', `Bearer ${accessToken}`);
+            res.cookie('refreshToken', `Bearer ${refreshToken}`);
+            res.status(200).json({
+                message: '로그인되었습니다.',
                 Authorization: `Bearer ${accessToken}`,
                 refreshToken: `Bearer ${refreshToken}`
             });
-            res.status(200).json({
-                message: '로그인되었습니다.'
-            });
-            
+
         } catch (error) {
             next(error);
         }
@@ -138,10 +170,8 @@ class UserController {
                     const refreshToken = jwt.refresh();
                     await addUserToken(refreshToken, user.userId);
 
-                    res.set({
-                        Authorization: `Bearer ${accessToken}`,
-                        refreshToken: `Bearer ${refreshToken}`
-                    });
+                    res.cookie('Authorization', `Bearer ${accessToken}`);
+                    res.cookie('refreshToken', `Bearer ${refreshToken}`);
                     res.status(200).json({
                         message: '로그인되었습니다.'
                     });
@@ -157,7 +187,7 @@ class UserController {
         await removeUserToken(refreshToken)
 
         res.status(200).json({
-            message: "SUCCESS"
+            message: 'SUCCESS'
         });
     }
 }

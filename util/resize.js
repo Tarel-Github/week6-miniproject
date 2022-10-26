@@ -1,10 +1,10 @@
 const sharp = require('sharp');
 const env = require('../config.env.js');
-
+const path = require('path');
 
 class ResizeAndSave {
     profImg = async function(userId, profImg) {
-        const dirPath = env.ROOT + env.PROF_DIR;
+        const dirPath = path.join(env.ROOT, env.PROF_DIR);
         const buffer = profImg.data;
     
         const comment = { width: 100, height: 100 };
