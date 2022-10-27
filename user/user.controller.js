@@ -198,30 +198,13 @@ class UserController {
     }
 
     signout = async function(req, res, next) {
-        const refreshToken = req.headers?.refreshtoken.split(' ')[1];
+        const { refreshToken } = req.params
         await removeUserToken(refreshToken)
 
         res.status(200).json({
             message: 'SUCCESS'
         });
     }
-
-        // signin = async function(req, res, next) {
-    //     const { username, password } = req.body;        
-
-    //     const payload = await User.signin({ username, password });
-    //     const accessToken = jwt.sign(payload);
-    //     const refreshToken = jwt.refresh();
-    //     await cache.addUserToken(refreshToken, payload.userId);
-
-    //     res.set({
-    //         Authorization: `Bearer ${accessToken}`,
-    //         refreshToken
-    //     });
-    //     res.status(200).json({
-    //         message: '로그인되었습니다.'
-    //     });
-    // }
 }
 
 
