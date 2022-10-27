@@ -24,7 +24,6 @@ class PostRepository {
     }
 
     getCategoryByName = async(name) => {
-        console.log(name)
         return await Categories.findOne({
             where: { name }
           })

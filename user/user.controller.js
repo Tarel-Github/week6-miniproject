@@ -173,7 +173,6 @@ class UserController {
     }
 
     kakaoSign = function(req, res, next) {
-        console.log("KAKAO CALLBACK");
 
         const { code } = req.query;
         const { REST_API_KEY, REDIRECT_URI } = env;

@@ -29,7 +29,6 @@ class UserService {
         const user = await User.findKakaoUser(nickname);
 
         if (user) {
-            console.log("KAKAO LOGIN: ", user);
             return {
                 userId: user.get().userId,
                 username: user.get().username,
@@ -37,7 +36,6 @@ class UserService {
             }
             
         } else {
-            console.log("KAKAO SIGNUP: ", newUser);
             const newUser = await User.signup({
                 username,
                 password: 'kakao',
