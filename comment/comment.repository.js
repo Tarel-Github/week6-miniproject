@@ -2,11 +2,16 @@ const { Users, Posts, Comments } = require('../db/models');          //모델 �
 
 class CommentRepository {
 
+    Comment = new Comments()
 
     //덧글 찾기
     findComment = async (postId) =>{
-        const comments = await Comments.findAll({where: { postId },   
-            include: [{model: Users, attributes: ["nickname"],},],   
+        const comments = await Comment.findAll({
+            where: { postId },
+            include: {
+                model: Users, 
+                attributes: ["nickname"]
+            },   
             order: [["createdAt", "DESC"]],
           });
         return comments;

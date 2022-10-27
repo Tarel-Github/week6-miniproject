@@ -12,7 +12,7 @@ class UserService {
         return await User.signup(user);
     }
 
-    signin = async function({ username, password }) {
+    signin = async function(username, password) {
         const user = await User.findOne(username);
         if (user === null || !(await bcrypt.compare(password, user.get().password))) {
             return new Error('아이디, 비밀번호가 일치하지 않습니다.');
@@ -23,6 +23,33 @@ class UserService {
             username,
             nickname: user.nickname
         };
+    }
+
+    kakaoSign = async function(nickname) {
+        const user = await User.findKakaoUser(nickname);
+
+        if (user) {
+            console.log("KAKAO LOGIN: ", user);
+            return {
+                userId: user.get().userId,
+                username: user.get().username,
+                nickname: user.get().nickname
+            }
+            
+        } else {
+            console.log("KAKAO SIGNUP: ", newUser);
+            const newUser = await User.signup({
+                username,
+                password: 'kakao',
+                nickname: username,
+                provider: 'kakao'
+            });
+            return {
+                userId: newUser.get().userId,
+                username: newUser.get().username,
+                nickname: newUser.get().nickname
+            };
+        }
     }
 
     dupCheck = async function(value) {
