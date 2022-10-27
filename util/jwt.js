@@ -23,6 +23,9 @@ class Jwt {
             expiresIn: 60*60*24
         });
     }
+    decode = function(token) {
+        return jwt.decode(token);
+    }
 }
 
 

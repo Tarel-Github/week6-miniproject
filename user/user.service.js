@@ -25,6 +25,33 @@ class UserService {
         };
     }
 
+    kakaoSign = async function(nickname) {
+        const user = await User.findKakaoUser(nickname);
+
+        if (user) {
+            console.log("KAKAO LOGIN: ", user);
+            return {
+                userId: user.get().userId,
+                username: user.get().username,
+                nickname: user.get().nickname
+            }
+            
+        } else {
+            console.log("KAKAO SIGNUP: ", newUser);
+            const newUser = await User.signup({
+                username,
+                password: 'kakao',
+                nickname: username,
+                provider: 'kakao'
+            });
+            return {
+                userId: newUser.get().userId,
+                username: newUser.get().username,
+                nickname: newUser.get().nickname
+            };
+        }
+    }
+
     dupCheck = async function(value) {
         const result = await User.findOne(value);
         return Boolean(result);

@@ -1,11 +1,13 @@
 const fs = require('fs');
-const passport = require('passport');
+const request = require('request');
+const env = require('../config.env');
 const User = require('./user.service');
-const { addUserToken, removeUserToken } = require('../db/cache');
 const jwt = require('../util/jwt');
+const { addUserToken, removeUserToken } = require('../db/cache');
 const ResizeAndSave = require('../util/resize');
 const { signupSchema, signinSchema } = require('../util/validation');
 const { InvalidParamsError } = require('../util/exception');
+
 
 
 class UserController {
@@ -115,6 +117,7 @@ class UserController {
         }
     }
 
+    // 파일 보냄
     profMy = async function(req, res, next) {
         try {
             const { authorization, refreshtoken } = req.headers;
@@ -130,6 +133,7 @@ class UserController {
         }
     }
 
+    // BASE64로 보냄
     profImage = async function(req, res, next) {
         try {
             const { userId } = req.app.locals.user;
@@ -171,28 +175,29 @@ class UserController {
         }
     }
 
-    kakaoSign = async function(req, res, next) {
-        try {
-            passport.authenticate(
-                'kakao',
-                { failureRedirect: '/user' }, // 프론트 페이지 연결
-                async (err, user, info) => {
-                    if (err) return next(err);
-    
-                    const accessToken = jwt.sign(user);
-                    const refreshToken = jwt.refresh();
-                    await addUserToken(refreshToken, user.userId);
+    kakaoSign = function(req, res, next) {
+        console.log("KAKAO CALLBACK");
 
-                    res.cookie('Authorization', `Bearer ${accessToken}`);
-                    res.cookie('refreshToken', `Bearer ${refreshToken}`);
-                    res.status(200).json({
-                        message: '로그인되었습니다.'
-                    });
-                }
-            )(req, res, next);
-          } catch (error) {
-            next(error);
-          }
+        const { code } = req.query;
+        const { REST_API_KEY, REDIRECT_URI } = env;
+        const url = `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${REST_API_KEY}&code=${code}`
+
+        request(url, async(err, response, body) => {
+            if (err) {
+                next(err);
+            }
+            const { id_token } = JSON.parse(body);
+            const { nickname } = jwt.decode(id_token);
+            const payload = await User.kakaoSign(nickname);            
+
+            const accessToken = jwt.sign(payload);
+            const refreshToken = jwt.refresh();
+            await addUserToken(refreshToken, user.userId);
+
+            res.status(200).json({
+                accessToken, refreshToken
+            });
+        });
     }
 
     signout = async function(req, res, next) {

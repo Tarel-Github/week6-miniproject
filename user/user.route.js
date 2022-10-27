@@ -26,9 +26,7 @@ router.delete('/:userId', authMiddleware, User.deleteUser);
 
 router.post('/signin', passport.authenticate('local'), User.localSign);
 
-router.get('/auth/kakao', passport.authenticate('kakao'));
-
-router.get('/auth/kakao/callback', User.kakaoSign);
+router.get('/signin/kakao/callback', User.kakaoSign);
 
 router.get('/signout', User.signout);
 
