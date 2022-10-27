@@ -1,4 +1,9 @@
+// const { postImg } = require('../util/resize');
 const PostService = require('./post.service');
+const env = require("../config.env")
+const sharp = require("sharp")
+const fs = require("fs")
+
 
 class PostsController {
     postService = new PostService();
@@ -25,12 +30,25 @@ class PostsController {
         }
     }
 
+
+    
     uploadPost = async(req,res,next)=>{
         try{
             const { userId } = req.app.locals.user;
             const { categoryId, title, contents } = req.body;
-            const uploadPostData = await this.postService.uploadPost(userId, categoryId, title, contents);
-            res.status(201).json({data : uploadPostData, msg : "게시글이 작성되었습니다"});
+            const { postImg } = req.files;
+            console.log(postImg)
+            const filename = postImg.name
+            // console.log(typeof postImg)
+            // 파일네임 설정이나 그런 것들 
+            // postImg.mv(env.ROOT+`/public/post/${filename}`)
+            await sharp(postImg.data)
+                    .resize(300,200,{ fit: 'contain' })
+                    .withMetadata() // 이미지가 회전하게 되는 것을 막기 위해?
+                    .toFile(env.ROOT+`/public/post/${filename}`)
+                    // console.log(img)
+            await this.postService.uploadPost(userId, categoryId, title, contents, filename);
+            res.status(201).json({ msg : "게시글이 작성되었습니다" })
         }catch(error){
             console.log(error)
             res.status(400).send({msg:"게시글 작성하는 데에 실패하였습니다"})
@@ -42,7 +60,14 @@ class PostsController {
             const { postId } = req.params;
             const { userId } = req.app.locals.user;
             const { categoryId, title, contents} = req.body;
-            const updatePostData = await this.postService.updatePost(postId, userId, categoryId, title, contents)
+            const { postImg } = req.files;
+            console.log(postImg)
+            const filename = postImg.name
+            await sharp(postImg.data)
+                    .resize(300,200,{ fit: 'contain' })
+                    .withMetadata()
+                    .toFile(env.ROOT+`/public/post/${filename}`)
+            const updatePostData = await this.postService.updatePost(postId, userId, categoryId, title, contents, filename)
             res.status(201).json({data : updatePostData});
         }catch(error){
             console.log(error)
