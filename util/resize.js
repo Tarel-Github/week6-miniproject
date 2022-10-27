@@ -3,17 +3,18 @@ const env = require('../config.env.js');
 const path = require('path');
 
 class ResizeAndSave {
+
     profImg = async function(userId, profImg) {
         const dirPath = path.join(env.ROOT, env.PROF_DIR);
         const buffer = profImg.data;
     
         const comment = { width: 100, height: 100 };
         const mypage = { width: 300, height: 300 };
-        const comPath = `${dirPath}${userId}_comment.png`;
-        const myPath = `${dirPath}${userId}_mypage.png`;
+        const comPath = `${dirPath}${userId}_comment.webp`;
+        const myPath = `${dirPath}${userId}_mypage.webp`;
     
         const saveCom = sharp(buffer)
-            .toFormat('png')
+            .toFormat('webp')
             .resize({
                 width: comment.width,
                 height: comment.width,
@@ -21,7 +22,7 @@ class ResizeAndSave {
             })
             .toFile(comPath);
         const saveMyp = sharp(buffer)
-            .toFormat('png')
+            .toFormat('webp')
             .resize({
                 width: mypage.width,
                 height: mypage.height,
@@ -39,11 +40,11 @@ class ResizeAndSave {
 
         const list = { width: 300, height: 200 };
         const detail = { width: 600, height: 600 };
-        const listPath = `${dirPath}${postId}_list.png`;
-        const detailPath = `${dirPath}${postId}_detail.png`;
+        const listPath = `${dirPath}${postId}_list.webp`;
+        const detailPath = `${dirPath}${postId}_detail.webp`;
 
         const saveList = sharp(buffer)
-            .toFormat('png')
+            .toFormat('webp')
             .resize({
                 width: list.width,
                 height: list.height,
@@ -51,7 +52,7 @@ class ResizeAndSave {
             })
             toFile(listPath);
         const saveDetail = sharp(buffer)
-            .toFormat('png')
+            .toFormat('webp')
             .resize({
                 width: detail.width,
                 height: detail.height,
@@ -61,8 +62,7 @@ class ResizeAndSave {
         await Promise.all([saveList, saveDetail]);
 
         return [listPath, detailPath];
-    };
+    };   
 }
-
 
 module.exports = new ResizeAndSave();
