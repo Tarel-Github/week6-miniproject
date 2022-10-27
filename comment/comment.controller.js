@@ -23,12 +23,8 @@ class CommentsController {
                 return;
             } 
 
-            //#########################
-            //const userId = 1 //로그인 기능 구현시 수정 필요
             const user=req.app.locals.user;                     //로그인중인 유저의 정보를 가져온다.
             const userId = user.userId                       //로그인 유저의 아이디를 가져옴
-            //#########################
-
 
             const post = await this.commentService.findPost(postId)//덧글을 달 포스트를 찾는다.
             const a = post.postId  
@@ -66,11 +62,8 @@ class CommentsController {
         try{
         const {commentId} = req.params;   
 
-        //#########################
-        //const userId = 1 //로그인 기능 구현시 수정 필요
         const user=req.app.locals.user;                     //로그인중인 유저의 정보를 가져온다.
         const userId = user.userId                       //로그인 유저의 아이디를 가져옴
-        //#########################
 
         const deleteComment = await this.commentService.deleteComment(commentId, userId);
         if(!deleteComment){
