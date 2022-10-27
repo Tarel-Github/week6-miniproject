@@ -90,7 +90,6 @@ class UserController {
     
             res.status(200).json({
                 data: userList,
-                session: req.session
             });
             
         } catch (error) {
@@ -153,17 +152,15 @@ class UserController {
     }
 
     localSign = async function(req, res, next) {
-        console.log('req.user: ', req.user);
         try {
-            const payload = req.user;
+            const { username, password } = req.body;
+            const payload = await User.signin(username, password)
             if (payload instanceof Error) throw payload;
 
             const accessToken = jwt.sign(payload);
             const refreshToken = jwt.refresh();
             await addUserToken(refreshToken, payload.userId);
     
-            res.cookie('Authorization', `Bearer ${accessToken}`);
-            res.cookie('refreshToken', `Bearer ${refreshToken}`);
             res.status(200).json({
                 message: '로그인되었습니다.',
                 accessToken: `Bearer ${accessToken}`,
@@ -192,7 +189,7 @@ class UserController {
 
             const accessToken = jwt.sign(payload);
             const refreshToken = jwt.refresh();
-            await addUserToken(refreshToken, user.userId);
+            await addUserToken(refreshToken, payload.userId);
 
             res.status(200).json({
                 accessToken, refreshToken

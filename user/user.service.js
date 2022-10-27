@@ -12,7 +12,7 @@ class UserService {
         return await User.signup(user);
     }
 
-    signin = async function({ username, password }) {
+    signin = async function(username, password) {
         const user = await User.findOne(username);
         if (user === null || !(await bcrypt.compare(password, user.get().password))) {
             return new Error('아이디, 비밀번호가 일치하지 않습니다.');

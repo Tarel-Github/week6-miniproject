@@ -10,6 +10,7 @@ app.listen(env.PORT, async() => {
     try {
         await sequelize.authenticate();
         setInterval(refreshMemory, 1000*60*60);
+        
         console.log('DB CONNECTED');
     } catch (error) {
         console.error(error);
