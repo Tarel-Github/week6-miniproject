@@ -34,17 +34,18 @@ class PostsController {
         try{
             const { userId } = req.app.locals.user;
             const { categoryId, title, contents } = req.body;
-            const { postImg } = req.files;
+            // const { postImg } = req.files;
 
-            const filename = postImg.name
+            // const filename = postImg.name
             // 파일네임 설정이나 그런 것들 
             // postImg.mv(env.ROOT+`/public/post/${filename}`)
-            await sharp(postImg.data)
-                    .resize(300,200,{ fit: 'contain' })
-                    .withMetadata() // 이미지가 회전하게 되는 것을 막기 위해?
-                    .toFile(env.ROOT+`/public/post/${filename}`)
+            // await sharp(postImg.data)
+            //         .resize(300,200,{ fit: 'contain' })
+            //         .withMetadata() // 이미지가 회전하게 되는 것을 막기 위해?
+            //         .toFile(env.ROOT+`/public/post/${filename}`)
 
-            await this.postService.uploadPost(userId, categoryId, title, contents, filename);
+            // await this.postService.uploadPost(userId, categoryId, title, contents, filename);
+            await this.postService.uploadPost(userId, categoryId, title, contents);
             res.status(201).json({ msg : "게시글이 작성되었습니다" })
         }catch(error){
             res.status(400).send({msg:"게시글 작성하는 데에 실패하였습니다"})
@@ -56,14 +57,15 @@ class PostsController {
             const { postId } = req.params;
             const { userId } = req.app.locals.user;
             const { categoryId, title, contents} = req.body;
-            const { postImg } = req.files;
+            // const { postImg } = req.files;
 
-            const filename = postImg.name
-            await sharp(postImg.data)
-                    .resize(300,200,{ fit: 'contain' })
-                    .withMetadata()
-                    .toFile(env.ROOT+`/public/post/${filename}`)
-            const updatePostData = await this.postService.updatePost(postId, userId, categoryId, title, contents, filename)
+            // const filename = postImg.name
+            // await sharp(postImg.data)
+            //         .resize(300,200,{ fit: 'contain' })
+            //         .withMetadata()
+            //         .toFile(env.ROOT+`/public/post/${filename}`)
+            // const updatePostData = await this.postService.updatePost(postId, userId, categoryId, title, contents, filename)
+            const updatePostData = await this.postService.updatePost(postId, userId, categoryId, title, contents)
             res.status(201).json({data : updatePostData});
         }catch(error){
             res.status(400).send({errorMessage : "게시글을 수정하는 데에 실패하였습니다"})

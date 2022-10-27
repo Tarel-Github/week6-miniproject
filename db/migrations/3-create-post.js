@@ -33,9 +33,9 @@ module.exports = {
       contents:{
         type: Sequelize.TEXT('tiny')
       },
-      postImg:{
-        type: Sequelize.STRING
-      },
+      // postImg:{
+      //   type: Sequelize.STRING
+      // },
       likes:{
         type: Sequelize.INTEGER.UNSIGNED,
         defaultValue: 0

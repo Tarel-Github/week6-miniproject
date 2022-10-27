@@ -58,9 +58,9 @@ module.exports = (sequelize, DataTypes) => {
     contents: {
       type: DataTypes.TEXT('tiny')
     },
-    postImg:{
-      type: DataTypes.STRING
-    },
+    // postImg:{
+    //   type: DataTypes.STRING
+    // },
     likes:{
       type: DataTypes.INTEGER.UNSIGNED,
       defaultValue: 0

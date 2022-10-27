@@ -31,4 +31,14 @@ router.get('/signin/kakao/callback', User.kakaoSign);
 router.get('/signout/:refreshToken', User.signout);
 
 
+router.post('/form', (req, res, next)=>{
+    console.log(req)
+
+    res.json({
+        body: req.body,
+        files: req.files
+    })
+})
+
+
 module.exports = router;

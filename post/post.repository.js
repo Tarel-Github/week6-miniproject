@@ -11,12 +11,18 @@ class PostRepository {
         })
     }
 
-    uploadPost = async(userId, categoryId, title, contents, postImg)=>{
-        return await Posts.create({userId, categoryId, title, contents, postImg})
+    // uploadPost = async(userId, categoryId, title, contents, postImg)=>{
+    //     return await Posts.create({userId, categoryId, title, contents, postImg})
+    // }
+    uploadPost = async(userId, categoryId, title, contents)=>{
+        return await Posts.create({userId, categoryId, title, contents})
     }
 
-    updatePost = async(postId, userId, categoryId, title, contents, postImg)=>{
-        await Posts.update({categoryId, title, contents, postImg},{where:{postId, userId}})
+    // updatePost = async(postId, userId, categoryId, title, contents, postImg)=>{
+    //     await Posts.update({categoryId, title, contents, postImg},{where:{postId, userId}})
+    // }
+    updatePost = async(postId, userId, categoryId, title, contents)=>{
+        await Posts.update({categoryId, title, contents},{where:{postId, userId}})
     }
 
     deletePost = async(postId, userId)=>{
